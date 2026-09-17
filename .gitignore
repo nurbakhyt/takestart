@@ -1,0 +1,21 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# next
+apps/web/.next/
+apps/web/out/
+
+# cloudflare
+.open-next/
+.wrangler/
+workers/
+
+# env
+.env
+.env*.local
+apps/web/.dev.vars
+
+# misc
+.DS_Store
+*.log

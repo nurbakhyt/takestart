@@ -1,0 +1,23 @@
+{
+  "home": {
+    "title": "TakeStart",
+    "subtitle": "Storefronts for small businesses with WhatsApp ordering",
+    "hint": "Scaffold ready: the /s/[slug] storefront lands in P3"
+  },
+  "storefront": {
+    "unavailable": "Out of stock",
+    "add": "Add",
+    "delivery": "Delivery",
+    "pickup": "Pickup",
+    "shopNotFound": "Shop not found or hidden",
+    "emptyMenu": "Menu is empty for now — check back later"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Empty for now — add something from the menu",
+    "total": "Total",
+    "deliveryFee": "Delivery",
+    "checkout": "Place order",
+    "items": "items"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "takestart",
+  "private": true,
+  "packageManager": "pnpm@11.22.0",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "preview": "pnpm --filter web preview",
+    "deploy": "pnpm --filter web deploy",
+    "lint": "pnpm --filter web lint",
+    "typecheck": "pnpm --filter web typecheck",
+    "db:generate": "pnpm --filter web db:generate",
+    "db:migrate:local": "pnpm --filter web db:migrate:local",
+    "db:seed:local": "pnpm --filter web db:seed:local"
+  }
+}

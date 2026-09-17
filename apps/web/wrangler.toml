@@ -1,0 +1,17 @@
+name = "takestart-web"
+compatibility_date = "2026-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Before first deploy:
+#   1. pnpm wrangler d1 create takestart-db  (from apps/web)
+#   2. paste the returned database_id below
+#   3. pnpm wrangler r2 bucket create takestart-images
+[[d1_databases]]
+binding = "DB"
+database_name = "takestart-db"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "db/migrations"
+
+[[r2_buckets]]
+binding = "IMAGES"
+bucket_name = "takestart-images"
