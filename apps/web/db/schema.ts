@@ -1,4 +1,11 @@
-import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  index,
+  integer,
+  primaryKey,
+  sqliteTable,
+  text,
+  unique,
+} from "drizzle-orm/sqlite-core";
 
 const id = () => text("id").primaryKey().$defaultFn(() => crypto.randomUUID());
 const createdAt = () =>
@@ -7,24 +14,29 @@ const createdAt = () =>
     .$defaultFn(() => Date.now());
 
 /** Shop: магазин/меню кафе. Один Seller владеет N Shops, slug уникален глобально. */
-export const shops = sqliteTable("shops", {
-  id: id(),
-  ownerId: text("owner_id").notNull(),
-  slug: text("slug").notNull().unique(),
-  name: text("name").notNull(),
-  /** WhatsApp-номер магазина в E.164 без плюса, напр. 77011234567 */
-  whatsappE164: text("whatsapp_e164").notNull(),
-  currency: text("currency").notNull().default("KZT"),
-  logoR2Key: text("logo_r2_key"),
-  addressText: text("address_text"),
-  /** delivery | pickup | both */
-  fulfillmentMode: text("fulfillment_mode").notNull().default("both"),
-  deliveryFeeTiyin: integer("delivery_fee_tiyin").notNull().default(0),
-  minOrderTiyin: integer("min_order_tiyin").notNull().default(0),
-  /** 1 = витрина открыта, 0 = скрыта */
-  isActive: integer("is_active").notNull().default(1),
-  createdAt: createdAt(),
-});
+export const shops = sqliteTable(
+  "shops",
+  {
+    id: id(),
+    /** users.id владельца (FK не ставим: сид owner_demo живёт без users-строки) */
+    ownerId: text("owner_id").notNull(),
+    slug: text("slug").notNull().unique(),
+    name: text("name").notNull(),
+    /** WhatsApp-номер магазина в E.164 без плюса, напр. 77011234567 */
+    whatsappE164: text("whatsapp_e164").notNull(),
+    currency: text("currency").notNull().default("KZT"),
+    logoR2Key: text("logo_r2_key"),
+    addressText: text("address_text"),
+    /** delivery | pickup | both */
+    fulfillmentMode: text("fulfillment_mode").notNull().default("both"),
+    deliveryFeeTiyin: integer("delivery_fee_tiyin").notNull().default(0),
+    minOrderTiyin: integer("min_order_tiyin").notNull().default(0),
+    /** 1 = витрина открыта, 0 = скрыта */
+    isActive: integer("is_active").notNull().default(1),
+    createdAt: createdAt(),
+  },
+  (t) => [index("shops_owner_idx").on(t.ownerId)],
+);
 
 /** Category: обязательная группировка Product внутри Shop. */
 export const categories = sqliteTable(
@@ -95,4 +107,59 @@ export const orders = sqliteTable(
     createdAt: createdAt(),
   },
   (t) => [index("orders_shop_idx").on(t.shopId, t.createdAt)],
+);
+
+// ---------------------------------------------------------------------------
+// Auth.js (next-auth v5) + @auth/d1-adapter. Имена/типы колонок — по контракту
+// адаптера, не переименовывать.
+// ---------------------------------------------------------------------------
+
+export const users = sqliteTable("users", {
+  id: id(),
+  name: text("name"),
+  email: text("email").unique(),
+  emailVerified: integer("emailVerified"),
+  image: text("image"),
+});
+
+export const accounts = sqliteTable(
+  "accounts",
+  {
+    id: id(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (t) => [
+    unique("accounts_provider_unique").on(t.provider, t.providerAccountId),
+  ],
+);
+
+export const sessions = sqliteTable("sessions", {
+  id: id(),
+  sessionToken: text("sessionToken").notNull().unique(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: integer("expires").notNull(),
+});
+
+export const verificationTokens = sqliteTable(
+  "verification_tokens",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull().unique(),
+    expires: integer("expires").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.identifier, t.token] })],
 );

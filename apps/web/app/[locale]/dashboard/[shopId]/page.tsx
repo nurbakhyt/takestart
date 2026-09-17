@@ -1,0 +1,154 @@
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { headers } from "next/headers";
+import { QRCodeSVG } from "qrcode.react";
+import { CopyLinkButton } from "@/components/dashboard/copy-link-button";
+import { normalizeLocale } from "@/lib/locale-text";
+import { requireShop } from "@/lib/dashboard";
+import { updateShop } from "../actions";
+
+export default async function ShopSettingsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string; shopId: string }>;
+  searchParams: Promise<{ err?: string; saved?: string }>;
+}) {
+  const { locale: rawLocale, shopId } = await params;
+  const locale = normalizeLocale(rawLocale);
+  setRequestLocale(locale);
+  const { err, saved } = await searchParams;
+
+  const t = await getTranslations("dashboard");
+  const shop = await requireShop(locale, shopId);
+
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  const publicUrl = host ? `${proto}://${host}/${locale}/s/${shop.slug}` : "";
+
+  const inputCls =
+    "w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-[15px] outline-none focus:border-zinc-900";
+
+  return (
+    <div className="flex flex-col gap-4">
+      {publicUrl ? (
+        <section className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-4">
+          <QRCodeSVG value={publicUrl} size={96} />
+          <div className="flex min-w-0 flex-col items-start gap-2">
+            <div className="w-full truncate text-[14px] font-medium">
+              {publicUrl}
+            </div>
+            <CopyLinkButton url={publicUrl} />
+            <a
+              href={publicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[13px] text-zinc-500 underline"
+            >
+              {t("openStorefront")}
+            </a>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="rounded-2xl border border-zinc-200 bg-white p-4">
+        <form action={updateShop} className="flex flex-col gap-3">
+          <input type="hidden" name="locale" value={locale} />
+          <input type="hidden" name="shopId" value={shop.id} />
+
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium">{t("shopName")}</span>
+            <input name="name" required maxLength={80} defaultValue={shop.name} className={inputCls} />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium">{t("slug")}</span>
+            <input
+              name="slug"
+              required
+              maxLength={48}
+              pattern="[a-z0-9-]{3,48}"
+              defaultValue={shop.slug}
+              className={inputCls}
+            />
+            <span className="text-[13px] text-zinc-500">{t("slugWarning")}</span>
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium">{t("whatsapp")}</span>
+            <input
+              name="whatsapp"
+              required
+              inputMode="tel"
+              defaultValue={`+${shop.whatsappE164}`}
+              className={inputCls}
+            />
+          </label>
+
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium">{t("address")}</span>
+            <input name="addressText" maxLength={200} defaultValue={shop.addressText ?? ""} className={inputCls} />
+          </label>
+
+          <div className="grid grid-cols-2 gap-3">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[14px] font-medium">{t("mode")}</span>
+              <select name="fulfillmentMode" defaultValue={shop.fulfillmentMode} className={inputCls}>
+                <option value="both">{t("modeBoth")}</option>
+                <option value="delivery">{t("modeDelivery")}</option>
+                <option value="pickup">{t("modePickup")}</option>
+              </select>
+            </label>
+            <label className="flex items-center gap-2.5 pt-7 text-[14px] font-medium">
+              <input
+                type="checkbox"
+                name="isActive"
+                defaultChecked={shop.isActive === 1}
+                className="h-5 w-5"
+              />
+              {t("visible")}
+            </label>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[14px] font-medium">{t("deliveryFee")}</span>
+              <input
+                name="deliveryFeeTenge"
+                type="number"
+                min={0}
+                max={1000000}
+                defaultValue={Math.round(shop.deliveryFeeTiyin / 100)}
+                className={inputCls}
+              />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[14px] font-medium">{t("minOrder")}</span>
+              <input
+                name="minOrderTenge"
+                type="number"
+                min={0}
+                max={10000000}
+                defaultValue={Math.round(shop.minOrderTiyin / 100)}
+                className={inputCls}
+              />
+            </label>
+          </div>
+
+          {err ? (
+            <p className="text-[14px] text-red-600">{t(`errors.${err}`)}</p>
+          ) : saved ? (
+            <p className="text-[14px] text-emerald-700">{t("savedHint")}</p>
+          ) : null}
+
+          <button
+            type="submit"
+            className="rounded-2xl bg-zinc-900 px-4 py-3 text-[15px] font-medium text-white active:scale-[0.99]"
+          >
+            {t("save")}
+          </button>
+        </form>
+      </section>
+    </div>
+  );
+}

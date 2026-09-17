@@ -8,6 +8,20 @@
       "when": 1789685702421,
       "tag": "0000_tricky_dark_beast",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789687049023,
+      "tag": "0001_equal_shatterstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789687075825,
+      "tag": "0002_loud_hydra",
+      "breakpoints": true
     }
   ]
 }

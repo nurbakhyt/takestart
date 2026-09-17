@@ -13,7 +13,7 @@ export async function GET(
   }
 
   const { env } = getCloudflareContext();
-  const obj = await env.IMAGES.get(objectKey);
+  const obj = await env.SHOP_IMAGES.get(objectKey);
   if (!obj) {
     return new Response("Not found", { status: 404 });
   }

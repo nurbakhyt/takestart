@@ -3,7 +3,13 @@
 declare global {
   interface CloudflareEnv {
     DB: D1Database;
-    IMAGES: R2Bucket;
+    /** Наш R2-бакет фото (имя IMAGES занято адаптером под image optimization). */
+    SHOP_IMAGES: R2Bucket;
+    AUTH_SECRET?: string;
+    AUTH_GOOGLE_ID?: string;
+    AUTH_GOOGLE_SECRET?: string;
+    AUTH_RESEND_KEY?: string;
+    AUTH_RESEND_FROM?: string;
   }
 }
 

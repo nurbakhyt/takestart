@@ -1,0 +1,15 @@
+# Локальные секреты для `next dev` (НЕ коммитить — уже в .gitignore).
+# Копировать: cp .dev.vars.example apps/web/.dev.vars
+# AUTH_SECRET сгенерировать: npx auth secret
+AUTH_SECRET="dev-only-insecure-secret-change-me"
+AUTH_GOOGLE_ID=""
+AUTH_GOOGLE_SECRET=""
+AUTH_RESEND_KEY=""
+# AUTH_RESEND_FROM="TakeStart <login@takestart.kz>"
+
+# Перед первым деплоем те же ключи задать как secrets воркера:
+#   pnpm wrangler secret put AUTH_SECRET
+#   pnpm wrangler secret put AUTH_GOOGLE_ID
+#   pnpm wrangler secret put AUTH_GOOGLE_SECRET
+#   pnpm wrangler secret put AUTH_RESEND_KEY
+# Плюс D1 id и R2 bucket из wrangler.toml-инструкции.

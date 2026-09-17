@@ -15,11 +15,15 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@auth/d1-adapter": "^1.11.3",
     "drizzle-orm": "^0.45.2",
     "next": "16.3.5",
+    "next-auth": "5.0.0-beta.32",
     "next-intl": "^4.14.5",
+    "qrcode.react": "^4.2.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "resend": "^6.28.1",
     "zod": "^4.6.5"
   },
   "devDependencies": {
