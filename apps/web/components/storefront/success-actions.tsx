@@ -39,14 +39,14 @@ export function SuccessActions({
         href={waLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="block rounded-2xl bg-emerald-600 px-4 py-3.5 text-center text-[16px] font-semibold text-white active:scale-[0.99]"
+        className="block rounded-lg bg-leaf px-4 py-3.5 text-center text-[16px] font-semibold text-white active:bg-leaf-deep"
       >
         {t("openWhatsapp")}
       </a>
       <button
         type="button"
         onClick={copy}
-        className="rounded-2xl border border-zinc-300 bg-white px-4 py-3 text-[15px] font-medium active:scale-[0.99]"
+        className="rounded-lg border border-ink bg-paper px-4 py-3 text-[15px] font-medium text-ink"
       >
         {copied ? t("copied") : t("copy")}
       </button>

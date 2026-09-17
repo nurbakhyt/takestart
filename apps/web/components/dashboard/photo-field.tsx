@@ -49,14 +49,14 @@ export function PhotoField({
       <input type="hidden" name="photoR2Key" value={key ?? ""} />
       {url ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={url} alt="" className="h-16 w-16 rounded-xl object-cover" />
+        <img src={url} alt="" className="h-16 w-16 rounded-lg object-cover" />
       ) : (
-        <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-zinc-100 text-xl text-zinc-400">
+        <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-fog font-display text-xl text-ink-faint">
           ?
         </div>
       )}
       <div className="flex flex-col items-start gap-1.5">
-        <label className="cursor-pointer rounded-xl bg-zinc-100 px-3.5 py-2 text-[14px] font-medium">
+        <label className="cursor-pointer rounded-lg border border-line bg-paper px-3.5 py-2 text-[14px] font-medium">
           {busy ? "…" : url ? t("photoChange") : t("photoAdd")}
           <input
             ref={inputRef}
@@ -76,12 +76,12 @@ export function PhotoField({
               setKey(null);
               setUrl(null);
             }}
-            className="text-[13px] text-red-600"
+            className="text-[13px] font-medium text-tandoor"
           >
             {t("photoRemove")}
           </button>
         ) : null}
-        {error ? <span className="text-[13px] text-red-600">{t("errors.bad_file")}</span> : null}
+        {error ? <span className="text-[13px] text-tandoor">{t("errors.bad_file")}</span> : null}
       </div>
     </div>
   );

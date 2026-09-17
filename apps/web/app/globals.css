@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
+@theme {
+  --color-paper: #ffffff;
+  --color-fog: #e9efe7;
+  --color-fog-deep: #dde7da;
+  --color-ink: #20382c;
+  --color-ink-soft: #4a5f53;
+  --color-ink-faint: #7d8f84;
+  --color-line: #d8e0d5;
+  --color-leaf: #14663b;
+  --color-leaf-deep: #0e4d2c;
+  --color-tandoor: #b3271e;
+  --color-tag: #ffc53d;
+
+  --font-display: "Unbounded", "Golos Text", system-ui, sans-serif;
+  --font-body: "Golos Text", system-ui, -apple-system, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-fog);
+  --foreground: var(--color-ink);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-fog);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-tag);
+  color: var(--color-ink);
+}
+
+/* Visible keyboard focus everywhere */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2.5px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Receipt tape column */
+.ts-tape {
+  background: var(--color-paper);
+  border-left: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
+}
+
+/* Dotted price leader between name and price */
+.ts-leader {
+  flex: 1 1 1.25rem;
+  min-width: 1.25rem;
+  border-bottom: 2px dotted var(--color-line);
+  transform: translateY(-5px);
+}
+
+/* Zigzag perforation edge for cart stub / receipts */
+.ts-zigzag-top {
+  --zz: 10px;
+  clip-path: polygon(
+    0 100%, 0 var(--zz),
+    5% 0, 10% var(--zz), 15% 0, 20% var(--zz),
+    25% 0, 30% var(--zz), 35% 0, 40% var(--zz),
+    45% 0, 50% var(--zz), 55% 0, 60% var(--zz),
+    65% 0, 70% var(--zz), 75% 0, 80% var(--zz),
+    85% 0, 90% var(--zz), 95% 0, 100% var(--zz),
+    100% 100%
+  );
+  padding-top: calc(var(--zz) + 0.75rem);
+}
+
+.ts-zigzag-bottom {
+  --zz: 10px;
+  clip-path: polygon(
+    0 0, 100% 0, 100% calc(100% - var(--zz)),
+    95% 100%, 90% calc(100% - var(--zz)), 85% 100%,
+    80% calc(100% - var(--zz)), 75% 100%, 70% calc(100% - var(--zz)),
+    65% 100%, 60% calc(100% - var(--zz)), 55% 100%,
+    50% calc(100% - var(--zz)), 45% 100%, 40% calc(100% - var(--zz)),
+    35% 100%, 30% calc(100% - var(--zz)), 25% 100%,
+    20% calc(100% - var(--zz)), 15% 100%, 10% calc(100% - var(--zz)),
+    5% 100%, 0 calc(100% - var(--zz))
+  );
+  padding-bottom: calc(var(--zz) + 0.75rem);
+}
+
+/* Stamped total: rotated tag-yellow highlight behind the sum */
+.ts-stamp {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.ts-stamp::before {
+  content: "";
+  position: absolute;
+  inset: 0.05em -0.3em 0 -0.3em;
+  background: var(--color-tag);
+  transform: rotate(-1.2deg);
+  z-index: -1;
+  border-radius: 2px;
+}
+
+/* Underline category tabs */
+.ts-tab {
+  position: relative;
+  padding: 0.65rem 0.1rem;
+  color: var(--color-ink-soft);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ts-tab[data-active="true"] {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+.ts-tab[data-active="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 3px;
+  background: var(--color-tandoor);
+  border-radius: 2px;
+}
+
+/* Single orchestrated entrance: receipt slides in once */
+@keyframes ts-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ts-enter {
+  animation: ts-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes ts-pop {
+  0% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ts-enter {
+    animation: none;
+  }
 }

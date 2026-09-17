@@ -12,14 +12,18 @@ export function LocaleSwitcher({
   path: string;
 }) {
   return (
-    <nav className="flex gap-1 rounded-full bg-zinc-100 p-1 text-[13px] font-medium">
+    <nav
+      aria-label="Язык"
+      className="flex shrink-0 gap-0.5 rounded-lg border border-line bg-paper p-0.5 text-[13px] font-medium"
+    >
       {routing.locales.map((l) => (
         <Link
           key={l}
           href={path}
           locale={l}
-          className={`rounded-full px-2.5 py-1 ${
-            l === locale ? "bg-white shadow-sm" : "text-zinc-500"
+          aria-current={l === locale ? "true" : undefined}
+          className={`rounded-md px-2 py-1 ${
+            l === locale ? "bg-ink text-paper" : "text-ink-soft"
           }`}
         >
           {LABEL[l]}

@@ -27,12 +27,12 @@ export default async function ShopSettingsPage({
   const publicUrl = host ? `${proto}://${host}/${locale}/s/${shop.slug}` : "";
 
   const inputCls =
-    "w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-[15px] outline-none focus:border-zinc-900";
+    "w-full rounded-lg border border-line bg-paper px-3.5 py-2.5 text-[15px] outline-none focus:border-ink";
 
   return (
     <div className="flex flex-col gap-4">
       {publicUrl ? (
-        <section className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-4">
+        <section className="flex items-center gap-4 rounded-lg border border-line bg-paper p-4">
           <QRCodeSVG value={publicUrl} size={96} />
           <div className="flex min-w-0 flex-col items-start gap-2">
             <div className="w-full truncate text-[14px] font-medium">
@@ -43,7 +43,7 @@ export default async function ShopSettingsPage({
               href={publicUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[13px] text-zinc-500 underline"
+              className="text-[13px] text-ink-soft underline underline-offset-4"
             >
               {t("openStorefront")}
             </a>
@@ -51,8 +51,8 @@ export default async function ShopSettingsPage({
         </section>
       ) : null}
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-4">
-        <form action={updateShop} className="flex flex-col gap-3">
+      <section className="rounded-lg border border-line bg-paper p-4 sm:p-5">
+        <form action={updateShop} className="flex flex-col gap-4">
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="shopId" value={shop.id} />
 
@@ -71,7 +71,7 @@ export default async function ShopSettingsPage({
               defaultValue={shop.slug}
               className={inputCls}
             />
-            <span className="text-[13px] text-zinc-500">{t("slugWarning")}</span>
+            <span className="text-[13px] text-ink-faint">{t("slugWarning")}</span>
           </label>
 
           <label className="flex flex-col gap-1.5">
@@ -104,7 +104,7 @@ export default async function ShopSettingsPage({
                 type="checkbox"
                 name="isActive"
                 defaultChecked={shop.isActive === 1}
-                className="h-5 w-5"
+                className="h-5 w-5 accent-[#14663b]"
               />
               {t("visible")}
             </label>
@@ -136,14 +136,14 @@ export default async function ShopSettingsPage({
           </div>
 
           {err ? (
-            <p className="text-[14px] text-red-600">{t(`errors.${err}`)}</p>
+            <p className="text-[14px] text-tandoor">{t(`errors.${err}`)}</p>
           ) : saved ? (
-            <p className="text-[14px] text-emerald-700">{t("savedHint")}</p>
+            <p className="text-[14px] font-medium text-leaf">{t("savedHint")}</p>
           ) : null}
 
           <button
             type="submit"
-            className="rounded-2xl bg-zinc-900 px-4 py-3 text-[15px] font-medium text-white active:scale-[0.99]"
+            className="rounded-lg bg-ink px-4 py-3 text-[15px] font-medium text-paper active:opacity-90"
           >
             {t("save")}
           </button>

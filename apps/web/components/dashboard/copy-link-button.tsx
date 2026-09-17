@@ -21,7 +21,7 @@ export function CopyLinkButton({ url }: { url: string }) {
     <button
       type="button"
       onClick={copy}
-      className="rounded-xl border border-zinc-300 bg-white px-3.5 py-2 text-[14px] font-medium active:scale-[0.99]"
+      className="rounded-lg border border-line bg-paper px-3.5 py-2 text-[14px] font-medium active:bg-fog"
     >
       {copied ? t("copied") : t("copyLink")}
     </button>

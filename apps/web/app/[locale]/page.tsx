@@ -19,10 +19,16 @@ export default async function HomePage({
 function Home() {
   const t = useTranslations("home");
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-4 bg-zinc-50 px-6 text-center">
-      <h1 className="text-4xl font-semibold tracking-tight">{t("title")}</h1>
-      <p className="max-w-md text-lg text-zinc-600">{t("subtitle")}</p>
-      <p className="max-w-md text-sm text-zinc-400">{t("hint")}</p>
+    <main className="flex flex-1 flex-col items-center justify-center bg-fog px-6 py-20 text-center">
+      <div className="ts-enter flex max-w-md flex-col items-center">
+        <p className="font-display text-[13px] font-medium text-ink-faint">
+          TakeStart
+        </p>
+        <h1 className="mt-3 font-display text-[30px] font-semibold leading-tight">
+          {t("subtitle")}
+        </h1>
+        <p className="mt-4 max-w-sm text-[15px] text-ink-soft">{t("hint")}</p>
+      </div>
     </main>
   );
 }

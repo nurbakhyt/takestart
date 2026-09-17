@@ -32,9 +32,9 @@ export default async function NewProductPage({
     <div className="flex flex-col gap-3">
       <a
         href={`/${locale}/dashboard/${shop.id}/products`}
-        className="text-[13px] text-zinc-500"
+        className="text-[13px] text-ink-soft underline underline-offset-4"
       >
-        ← {t("tabs.products")}
+        {t("tabs.products")}
       </a>
       <ProductForm
         locale={locale}

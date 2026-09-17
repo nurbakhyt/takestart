@@ -29,10 +29,10 @@ export async function ProductForm({
 }) {
   const t = await getTranslations("dashboard");
   const inputCls =
-    "w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-[15px] outline-none focus:border-zinc-900";
+    "w-full rounded-lg border border-line bg-paper px-3.5 py-2.5 text-[15px] outline-none focus:border-ink";
 
   return (
-    <form action={saveProduct} className="flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4">
+    <form action={saveProduct} className="flex flex-col gap-4 rounded-lg border border-line bg-paper p-4 sm:p-5">
       <input type="hidden" name="locale" value={locale} />
       <input type="hidden" name="shopId" value={shopId} />
       {defaults ? <input type="hidden" name="id" value={defaults.id} /> : null}
@@ -106,12 +106,12 @@ export async function ProductForm({
       </label>
 
       {errorCode ? (
-        <p className="text-[14px] text-red-600">{t(`errors.${errorCode}`)}</p>
+        <p className="text-[14px] text-tandoor">{t(`errors.${errorCode}`)}</p>
       ) : null}
 
       <button
         type="submit"
-        className="rounded-2xl bg-zinc-900 px-4 py-3 text-[15px] font-medium text-white active:scale-[0.99]"
+        className="rounded-lg bg-ink px-4 py-3 text-[15px] font-medium text-paper active:opacity-90"
       >
         {t("save")}
       </button>

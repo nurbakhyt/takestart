@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { normalizeLocale } from "@/lib/locale-text";
 import { requireShop } from "@/lib/dashboard";
+import { ShopTabs } from "@/components/dashboard/shop-tabs";
 
 const TABS = ["settings", "products", "categories", "orders"] as const;
 
@@ -24,26 +25,21 @@ export default async function ShopLayout({
       <div className="min-w-0">
         <a
           href={`/${locale}/dashboard`}
-          className="text-[13px] text-zinc-500"
+          className="text-[13px] text-ink-soft underline underline-offset-4"
         >
-          ← {t("myShops")}
+          {t("myShops")}
         </a>
-        <h1 className="truncate text-xl font-semibold">{shop.name}</h1>
+        <h1 className="mt-1 truncate font-display text-[20px] font-semibold">
+          {shop.name}
+        </h1>
       </div>
-      <nav className="flex gap-1.5 overflow-x-auto rounded-2xl bg-zinc-100 p-1.5 text-[14px] font-medium">
-        {TABS.map((tab) => {
-          const href = tab === "settings" ? base : `${base}/${tab}`;
-          return (
-            <a
-              key={tab}
-              href={href}
-              className="shrink-0 rounded-xl bg-white px-3.5 py-2 shadow-sm"
-            >
-              {t(`tabs.${tab}`)}
-            </a>
-          );
-        })}
-      </nav>
+      <ShopTabs
+        tabs={TABS.map((tab) => ({
+          key: tab,
+          label: t(`tabs.${tab}`),
+          href: tab === "settings" ? base : `${base}/${tab}`,
+        }))}
+      />
       <div>{children}</div>
     </div>
   );

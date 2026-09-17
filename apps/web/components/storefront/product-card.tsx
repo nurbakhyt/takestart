@@ -26,7 +26,7 @@ export function ProductCard({
 
   return (
     <div
-      className={`flex gap-3 rounded-2xl border border-zinc-200 bg-white p-3 ${
+      className={`flex gap-3 border-b border-line py-3.5 ${
         available ? "" : "opacity-60"
       }`}
     >
@@ -35,45 +35,50 @@ export function ProductCard({
         <img
           src={photoUrl}
           alt={name}
-          className="h-20 w-20 shrink-0 rounded-xl object-cover"
+          className="h-16 w-16 shrink-0 rounded-lg object-cover"
           loading="lazy"
         />
       ) : (
         <div
           aria-hidden
-          className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-zinc-100 text-2xl font-semibold text-zinc-400"
+          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-fog font-display text-xl text-ink-faint"
         >
           {name.slice(0, 1).toUpperCase()}
         </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="truncate text-[15px] font-medium">{name}</div>
+        <div className="flex items-baseline gap-2">
+          <div className="truncate text-[15px] font-medium">{name}</div>
+          <span aria-hidden className="ts-leader" />
+          <div className="shrink-0 font-display text-[13px] font-semibold text-tandoor">
+            {priceLabel}
+          </div>
+        </div>
         {desc ? (
-          <div className="mt-0.5 line-clamp-2 text-[13px] leading-5 text-zinc-500">
+          <div className="mt-0.5 line-clamp-2 text-[13px] leading-5 text-ink-soft">
             {desc}
           </div>
         ) : null}
-        <div className="mt-auto flex items-center justify-between pt-2">
-          <div className="text-[15px] font-semibold">{priceLabel}</div>
+        <div className="mt-2 flex items-center justify-end">
           {!available ? (
-            <span className="rounded-full bg-zinc-100 px-3 py-1.5 text-[13px] text-zinc-500">
+            <span className="text-[13px] font-medium text-tandoor">
               {t("unavailable")}
             </span>
           ) : qty === 0 ? (
             <button
               type="button"
               onClick={() => add({ id, name, priceTiyin })}
-              className="rounded-full bg-zinc-900 px-4 py-1.5 text-[14px] font-medium text-white active:scale-95"
+              className="rounded-lg border border-ink px-4 py-2 text-[14px] font-semibold text-ink active:bg-ink active:text-paper"
             >
               {t("add")}
             </button>
           ) : (
-            <div className="flex items-center gap-3 rounded-full bg-zinc-100 px-1.5 py-1">
+            <div className="flex items-center gap-1 rounded-lg border border-ink">
               <button
                 type="button"
                 aria-label="−"
                 onClick={() => setQty(id, qty - 1)}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-lg leading-none shadow-sm active:scale-95"
+                className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
               >
                 −
               </button>
@@ -84,7 +89,7 @@ export function ProductCard({
                 type="button"
                 aria-label="+"
                 onClick={() => setQty(id, qty + 1)}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-lg leading-none shadow-sm active:scale-95"
+                className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
               >
                 +
               </button>

@@ -57,10 +57,10 @@ export function CheckoutForm({
   if (lines.length === 0) {
     return (
       <div className="flex flex-col items-center gap-4 py-16 text-center">
-        <p className="text-zinc-500">{t("emptyCart")}</p>
+        <p className="text-ink-soft">{t("emptyCart")}</p>
         <a
           href={backHref}
-          className="rounded-2xl bg-zinc-900 px-5 py-3 text-[15px] font-medium text-white"
+          className="rounded-lg bg-ink px-5 py-3 text-[15px] font-medium text-paper"
         >
           {t("emptyCartCta")}
         </a>
@@ -103,19 +103,22 @@ export function CheckoutForm({
   }
 
   const inputCls =
-    "w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-3 text-[15px] outline-none focus:border-zinc-900";
+    "w-full rounded-none border-0 border-b border-line bg-transparent px-0 py-2.5 text-[15px] outline-none placeholder:text-ink-faint focus:border-ink";
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-4">
+    <form onSubmit={submit} className="flex flex-col gap-5">
       {fulfillmentMode === "both" ? (
-        <div className="grid grid-cols-2 gap-2 rounded-2xl bg-zinc-100 p-1.5">
+        <div className="grid grid-cols-2 gap-2" role="group">
           {(["delivery", "pickup"] as const).map((m) => (
             <button
               key={m}
               type="button"
+              aria-pressed={fulfillment === m}
               onClick={() => setFulfillment(m)}
-              className={`rounded-xl px-3 py-2.5 text-[14px] font-medium ${
-                fulfillment === m ? "bg-white shadow-sm" : "text-zinc-500"
+              className={`rounded-lg border px-3 py-2.5 text-[14px] ${
+                fulfillment === m
+                  ? "border-ink font-semibold"
+                  : "border-line text-ink-soft"
               }`}
             >
               {m === "delivery" ? t("fulfillmentDelivery") : t("fulfillmentPickup")}
@@ -124,7 +127,7 @@ export function CheckoutForm({
         </div>
       ) : null}
 
-      <label className="flex flex-col gap-1.5">
+      <label className="flex flex-col gap-1">
         <span className="text-[14px] font-medium">{t("name")}</span>
         <input
           className={inputCls}
@@ -136,7 +139,7 @@ export function CheckoutForm({
         />
       </label>
 
-      <label className="flex flex-col gap-1.5">
+      <label className="flex flex-col gap-1">
         <span className="text-[14px] font-medium">{t("phone")} *</span>
         <input
           className={inputCls}
@@ -150,10 +153,10 @@ export function CheckoutForm({
       </label>
 
       {fulfillment === "delivery" ? (
-        <label className="flex flex-col gap-1.5">
+        <label className="flex flex-col gap-1">
           <span className="text-[14px] font-medium">{t("address")} *</span>
           <textarea
-            className={`${inputCls} min-h-20 resize-y`}
+            className={`${inputCls} min-h-16 resize-y`}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder={t("addressPh")}
@@ -164,7 +167,7 @@ export function CheckoutForm({
         </label>
       ) : null}
 
-      <label className="flex flex-col gap-1.5">
+      <label className="flex flex-col gap-1">
         <span className="text-[14px] font-medium">{t("comment")}</span>
         <input
           className={inputCls}
@@ -175,27 +178,29 @@ export function CheckoutForm({
         />
       </label>
 
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 text-[14px]">
-        <div className="flex justify-between text-zinc-600">
+      <div className="border-y border-line py-3 text-[14px]">
+        <div className="flex justify-between text-ink-soft">
           <span>
-            {t("summary")} · {lines.length}
+            {t("summary")}, {lines.length}
           </span>
           <span>{formatKZT(subtotalTiyin, locale)}</span>
         </div>
         {deliveryFee > 0 ? (
-          <div className="mt-1 flex justify-between text-zinc-600">
+          <div className="mt-1 flex justify-between text-ink-soft">
             <span>{t("deliveryFee")}</span>
             <span>{formatKZT(deliveryFee, locale)}</span>
           </div>
         ) : null}
-        <div className="mt-1.5 flex justify-between border-t border-zinc-100 pt-2 text-[16px] font-semibold">
-          <span>{t("total")}</span>
-          <span>{formatKZT(total, locale)}</span>
+        <div className="mt-2 flex items-baseline justify-between">
+          <span className="text-[16px] font-semibold">{t("total")}</span>
+          <span className="ts-stamp font-display text-[17px] font-semibold">
+            {formatKZT(total, locale)}
+          </span>
         </div>
       </div>
 
       {errorText ? (
-        <p className="rounded-xl bg-red-50 px-3.5 py-3 text-[14px] text-red-700">
+        <p className="rounded-lg border border-tandoor px-3.5 py-3 text-[14px] text-tandoor">
           {errorText}
         </p>
       ) : null}
@@ -203,7 +208,7 @@ export function CheckoutForm({
       <button
         type="submit"
         disabled={pending || belowMinimum}
-        className="rounded-2xl bg-emerald-600 px-4 py-3.5 text-[16px] font-semibold text-white disabled:opacity-50 active:scale-[0.99]"
+        className="rounded-lg bg-leaf px-4 py-3.5 text-[16px] font-semibold text-white disabled:opacity-50 active:bg-leaf-deep"
       >
         {pending ? "…" : t("submit")}
       </button>

@@ -18,6 +18,7 @@
     "total": "Total",
     "deliveryFee": "Delivery",
     "checkout": "Place order",
+    "close": "Close",
     "items": "items"
   },
   "checkout": {
@@ -56,7 +57,7 @@
     "openWhatsapp": "Open WhatsApp",
     "copy": "Copy order",
     "copied": "Copied ✓",
-    "backToMenu": "← Back to menu"
+    "backToMenu": "Back to menu"
   },
   "auth": {
     "subtitle": "Seller sign-in",
@@ -68,6 +69,8 @@
   },
   "dashboard": {
     "myShops": "My shops",
+    "open": "Open",
+    "logout": "Sign out",
     "hidden": "hidden",
     "noShops": "No shops yet — create the first one below",
     "newShop": "New shop",

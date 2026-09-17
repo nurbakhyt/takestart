@@ -29,13 +29,13 @@ export default async function CategoriesPage({
     .orderBy(asc(categories.sortOrder));
 
   const inputCls =
-    "rounded-xl border border-zinc-300 bg-white px-3 py-2 text-[14px] outline-none focus:border-zinc-900";
+    "rounded-lg border border-line bg-paper px-3 py-2 text-[14px] outline-none focus:border-ink";
 
   return (
-    <div className="flex flex-col gap-3">
-      <section className="rounded-2xl border border-zinc-200 bg-white p-4">
-        <h2 className="mb-2.5 text-[15px] font-semibold">{t("newCategory")}</h2>
-        <form action={createCategory} className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
+      <section className="rounded-lg border border-line bg-paper p-4">
+        <h2 className="mb-2.5 font-display text-[14px] font-semibold">{t("newCategory")}</h2>
+        <form action={createCategory} className="flex flex-col gap-2.5">
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="shopId" value={shop.id} />
           <div className="grid grid-cols-3 gap-2">
@@ -43,10 +43,10 @@ export default async function CategoriesPage({
             <input name="nameKk" maxLength={60} placeholder="KZ" className={inputCls} />
             <input name="nameEn" maxLength={60} placeholder="EN" className={inputCls} />
           </div>
-          {err ? <p className="text-[14px] text-red-600">{t(`errors.${err}`)}</p> : null}
+          {err ? <p className="text-[14px] text-tandoor">{t(`errors.${err}`)}</p> : null}
           <button
             type="submit"
-            className="rounded-xl bg-zinc-900 px-4 py-2.5 text-[14px] font-medium text-white active:scale-[0.99]"
+            className="rounded-lg bg-ink px-4 py-2.5 text-[14px] font-medium text-paper active:opacity-90"
           >
             {t("add")}
           </button>
@@ -57,7 +57,7 @@ export default async function CategoriesPage({
         <form
           key={c.id}
           action={renameCategory}
-          className="flex items-center gap-2 rounded-2xl border border-zinc-200 bg-white p-3"
+          className="flex items-center gap-2 border-b border-line py-2.5"
         >
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="shopId" value={shop.id} />
@@ -65,14 +65,14 @@ export default async function CategoriesPage({
           <input name="nameRu" required maxLength={60} defaultValue={c.nameRu} className={`${inputCls} min-w-0 flex-1`} />
           <button
             type="submit"
-            className="shrink-0 rounded-xl bg-zinc-100 px-3 py-2 text-[13px] font-medium"
+            className="shrink-0 rounded-lg border border-line bg-paper px-3 py-2 text-[13px] font-medium"
           >
             {t("save")}
           </button>
           <button
             type="submit"
             formAction={deleteCategory}
-            className="shrink-0 rounded-xl bg-red-50 px-3 py-2 text-[13px] font-medium text-red-700"
+            className="shrink-0 rounded-lg border border-tandoor/40 px-3 py-2 text-[13px] font-medium text-tandoor"
           >
             {t("delete")}
           </button>
