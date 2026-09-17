@@ -19,5 +19,43 @@
     "deliveryFee": "Delivery",
     "checkout": "Place order",
     "items": "items"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "name": "Name",
+    "namePh": "How should we address you",
+    "phone": "Phone",
+    "phonePh": "+7 701 123 45 67",
+    "address": "Delivery address",
+    "addressPh": "City, street, building, apartment",
+    "comment": "Note",
+    "commentPh": "E.g.: no onions, call an hour ahead",
+    "fulfillmentDelivery": "Delivery",
+    "fulfillmentPickup": "Pickup",
+    "summary": "Items",
+    "deliveryFee": "Delivery",
+    "total": "Total",
+    "submit": "Order via WhatsApp",
+    "emptyCart": "Cart is empty",
+    "emptyCartCta": "Back to menu",
+    "errors": {
+      "invalid_payload": "Please check the form",
+      "item_unavailable": "Something in your cart is no longer available — back to menu",
+      "invalid_phone": "Enter a valid phone, e.g. +7 701 123 45 67",
+      "address_required": "Please enter a delivery address",
+      "below_minimum": "Total is below the minimum order",
+      "delivery_unavailable": "Delivery unavailable, choose pickup",
+      "pickup_unavailable": "Pickup unavailable, choose delivery",
+      "network": "Could not send — check your connection and retry"
+    }
+  },
+  "success": {
+    "title": "Order received!",
+    "code": "Order number",
+    "note": "Tap the button below to send the order to the seller on WhatsApp",
+    "openWhatsapp": "Open WhatsApp",
+    "copy": "Copy order",
+    "copied": "Copied ✓",
+    "backToMenu": "← Back to menu"
   }
 }
