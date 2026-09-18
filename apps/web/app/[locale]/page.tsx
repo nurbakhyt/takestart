@@ -176,13 +176,13 @@ function Home({ locale }: { locale: string }) {
             ].map((b) => (
               <div
                 key={b.title}
-                className="flex items-baseline gap-3 border-b border-dotted border-line py-5 last:border-b-0"
+                className="flex flex-col gap-1 border-b border-dotted border-line py-5 last:border-b-0 sm:flex-row sm:items-baseline sm:gap-3"
               >
-                <dt className="shrink-0 font-display text-[15px] font-semibold">
+                <dt className="font-display text-[15px] font-semibold sm:shrink-0">
                   {b.title}
                 </dt>
-                <span aria-hidden className="ts-leader" />
-                <dd className="max-w-[46ch] text-right text-[14px] leading-6 text-ink-soft sm:text-left">
+                <span aria-hidden className="ts-leader hidden sm:block" />
+                <dd className="max-w-[46ch] text-[14px] leading-6 text-ink-soft sm:text-left">
                   {b.text}
                 </dd>
               </div>
