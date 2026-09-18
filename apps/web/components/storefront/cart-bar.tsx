@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCart } from "./cart-context";
 import { formatKZT } from "@/lib/locale-text";
+import { BagIcon, MinusIcon, PlusIcon } from "./icons";
 
 export function CartBar({
   locale,
@@ -34,7 +35,8 @@ export function CartBar({
               onClick={() => setOpen(true)}
               className="flex w-full items-center justify-between rounded-lg bg-ink px-4 py-3.5 text-paper active:opacity-90"
             >
-              <span className="text-[14px] font-medium">
+              <span className="flex items-center gap-2 text-[14px] font-medium">
+                <BagIcon className="h-5 w-5" />
                 {t("title")}, {count}
               </span>
               <span className="font-display text-[15px] font-semibold">
@@ -77,9 +79,9 @@ export function CartBar({
                       type="button"
                       aria-label="−"
                       onClick={() => setQty(l.id, l.qty - 1)}
-                      className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
+                      className="flex h-9 w-9 items-center justify-center active:bg-fog"
                     >
-                      −
+                      <MinusIcon className="h-4 w-4" />
                     </button>
                     <span className="min-w-5 text-center text-[15px] font-semibold">
                       {l.qty}
@@ -88,9 +90,9 @@ export function CartBar({
                       type="button"
                       aria-label="+"
                       onClick={() => setQty(l.id, l.qty + 1)}
-                      className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
+                      className="flex h-9 w-9 items-center justify-center active:bg-fog"
                     >
-                      +
+                      <PlusIcon className="h-4 w-4" />
                     </button>
                   </div>
                   <div className="w-20 shrink-0 text-right font-display text-[13px] font-semibold text-tandoor">

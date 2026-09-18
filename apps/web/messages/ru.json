@@ -56,7 +56,11 @@
     "delivery": "Доставка",
     "pickup": "Самовывоз",
     "shopNotFound": "Магазин не найден или скрыт",
-    "emptyMenu": "Меню пока пустое — загляните позже"
+    "emptyMenu": "Меню пока пустое — загляните позже",
+    "zoomPhoto": "Открыть фото",
+    "closePhoto": "Закрыть фото",
+    "footerCta": "Заказать в WhatsApp",
+    "footerPowered": "Витрина работает на TakeStart"
   },
   "cart": {
     "title": "Корзина",
