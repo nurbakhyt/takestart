@@ -6,7 +6,7 @@ INSERT OR REPLACE INTO shops
   (id, owner_id, slug, name, whatsapp_e164, currency, logo_r2_key, address_text,
    fulfillment_mode, delivery_fee_tiyin, min_order_tiyin, is_active, created_at)
 VALUES
-  ('shop_dana', 'owner_demo', 'dana-food', 'Dana Food', '77011234567', 'KZT', NULL,
+  ('shop_dana', 'owner_demo', 'dana-food', 'Dana Food', '77711779855', 'KZT', NULL,
    'Алматы, ул. Абая 10', 'both', 50000, 0, 1, 1726636800000);
 
 INSERT OR IGNORE INTO categories (id, shop_id, name_ru, name_kk, name_en, sort_order) VALUES
