@@ -21,3 +21,7 @@ migrations_dir = "db/migrations"
 [[r2_buckets]]
 binding = "SHOP_IMAGES"
 bucket_name = "takestart-images"
+
+[observability.logs]
+enabled = false
+invocation_logs = true
