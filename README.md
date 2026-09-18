@@ -66,7 +66,6 @@ Preview идёт через `opennextjs-cloudflare upload` (скрипт `upload
 
 ## Структура
 
-
 ```
 apps/web/
   app/[locale]/s/[slug]/   # витрина, checkout, success
