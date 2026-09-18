@@ -69,7 +69,7 @@ function Home({ locale }: { locale: string }) {
               {t("hero_primary")}
             </a>
             <a
-              href="#how"
+              href={`/${locale}/s/dala-food`}
               className="rounded-xl border border-line bg-paper px-5 py-3 text-[15px] font-semibold"
             >
               {t("hero_secondary")}
