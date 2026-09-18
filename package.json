@@ -4,9 +4,11 @@
   "packageManager": "pnpm@11.22.0",
   "scripts": {
     "dev": "pnpm --filter web dev",
+    "dev:ai": "pnpm --filter takestart-ai dev",
     "build": "pnpm --filter web build",
     "preview": "pnpm --filter web preview",
     "deploy": "pnpm --filter web deploy",
+    "deploy:ai": "pnpm --filter takestart-ai deploy",
     "lint": "pnpm --filter web lint",
     "typecheck": "pnpm --filter web typecheck",
     "db:generate": "pnpm --filter web db:generate",
