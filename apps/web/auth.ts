@@ -17,11 +17,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
     secret: env.AUTH_SECRET,
     adapter: D1Adapter(env.DB),
     providers: [
-      Google({
-        clientId: env.AUTH_GOOGLE_ID,
-        clientSecret: env.AUTH_GOOGLE_SECRET,
-        allowDangerousEmailAccountLinking: true,
-      }),
+      // Google включается только когда секреты заданы — иначе пустые
+      // credentials ломают весь auth-модуль (Configuration error).
+      ...(env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET
+        ? [
+            Google({
+              clientId: env.AUTH_GOOGLE_ID,
+              clientSecret: env.AUTH_GOOGLE_SECRET,
+              allowDangerousEmailAccountLinking: true,
+            }),
+          ]
+        : []),
       Resend({
         apiKey: env.AUTH_RESEND_KEY,
         from: env.AUTH_RESEND_FROM ?? "TakeStart <login@takestart.kz>",
