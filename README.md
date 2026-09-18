@@ -43,6 +43,27 @@ pnpm deploy
 Google OAuth: redirect URI — `https://<ваш-домен>/api/auth/callback/google`.
 Resend: адрес в `AUTH_RESEND_FROM` должен быть на подтверждённом домене.
 
+## Деплой через Git (Workers Builds)
+
+Дашборд Cloudflare → Worker `takestart` → Settings → Build:
+
+| Поле | Значение |
+|---|---|
+| Root directory | `apps/web` |
+| Build command | `pnpm run build` |
+| Deploy command | `pnpm run deploy` |
+| Production branch | `main` |
+
+Build variable: `NODE_VERSION=22`. Watch paths: include `apps/web/**`.
+
+Почему так: `pnpm run build` — это чистый `next build` (вывод в `.next/`),
+а воркеру нужен `.open-next/worker.js` из `opennextjs-cloudflare build`
+(`main` в `apps/web/wrangler.toml`). `pnpm run deploy` делает `build && deploy`
+сразу — как Deploy-команда это двойной билд, поэтому build и deploy разделены.
+Preview идёт через `opennextjs-cloudflare upload` (скрипт `upload`),
+а не голый `wrangler versions upload` — иначе пропустятся populateCache
+и deployment mapping OpenNext.
+
 ## Структура
 
 
