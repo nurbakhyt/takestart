@@ -45,6 +45,7 @@ Resend: адрес в `AUTH_RESEND_FROM` должен быть на подтве
 
 ## Структура
 
+
 ```
 apps/web/
   app/[locale]/s/[slug]/   # витрина, checkout, success
