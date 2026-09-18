@@ -30,7 +30,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth(() => {
         : []),
       Resend({
         apiKey: env.AUTH_RESEND_KEY,
-        from: env.AUTH_RESEND_FROM ?? "TakeStart <login@takestart.kz>",
+        from: env.AUTH_RESEND_FROM ?? "TakeStart <login@takestart.cc>",
       }),
     ],
   };
