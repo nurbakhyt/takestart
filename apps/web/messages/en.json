@@ -60,7 +60,9 @@
     "zoomPhoto": "Open photo",
     "closePhoto": "Close photo",
     "footerCta": "Order via WhatsApp",
-    "footerPowered": "Storefront powered by TakeStart"
+    "footerPowered": "Storefront powered by TakeStart",
+    "language": "Language",
+    "categories": "Categories"
   },
   "cart": {
     "title": "Cart",
@@ -68,8 +70,7 @@
     "total": "Total",
     "deliveryFee": "Delivery",
     "checkout": "Place order",
-    "close": "Close",
-    "items": "items"
+    "close": "Close"
   },
   "checkout": {
     "title": "Checkout",

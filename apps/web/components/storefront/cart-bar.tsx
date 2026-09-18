@@ -51,7 +51,7 @@ export function CartBar({
         <div className="fixed inset-0 z-50 flex flex-col justify-end bg-ink/40">
           <button
             type="button"
-            aria-label="close"
+            aria-label={t("close")}
             className="absolute inset-0 cursor-default"
             onClick={() => setOpen(false)}
           />

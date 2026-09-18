@@ -1,5 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 const LABEL: Record<Locale, string> = { ru: "RU", kk: "KZ", en: "EN" };
 
@@ -11,9 +12,10 @@ export function LocaleSwitcher({
   locale: Locale;
   path: string;
 }) {
+  const t = useTranslations("storefront");
   return (
     <nav
-      aria-label="Язык"
+      aria-label={t("language")}
       className="flex shrink-0 gap-0.5 rounded-lg border border-line bg-paper p-0.5 text-[13px] font-medium"
     >
       {routing.locales.map((l) => (

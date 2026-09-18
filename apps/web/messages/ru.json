@@ -60,7 +60,9 @@
     "zoomPhoto": "Открыть фото",
     "closePhoto": "Закрыть фото",
     "footerCta": "Заказать в WhatsApp",
-    "footerPowered": "Витрина работает на TakeStart"
+    "footerPowered": "Витрина работает на TakeStart",
+    "language": "Язык",
+    "categories": "Категории"
   },
   "cart": {
     "title": "Корзина",
@@ -68,8 +70,7 @@
     "total": "Итого",
     "deliveryFee": "Доставка",
     "checkout": "Оформить заказ",
-    "close": "Закрыть",
-    "items": "позиций"
+    "close": "Закрыть"
   },
   "checkout": {
     "title": "Оформление заказа",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 /** Вкладки категорий с подчёркиванием активного раздела при прокрутке. */
 export function CategoryNav({
@@ -11,6 +12,7 @@ export function CategoryNav({
   const [active, setActive] = useState<string | null>(
     items.length > 0 ? items[0].id : null,
   );
+  const t = useTranslations("storefront");
 
   useEffect(() => {
     if (items.length === 0) return;
@@ -33,7 +35,7 @@ export function CategoryNav({
 
   return (
     <nav
-      aria-label="Категории"
+      aria-label={t("categories")}
       className="flex gap-5 overflow-x-auto px-4 pb-1 sm:px-6"
     >
       {items.map((c) => (
