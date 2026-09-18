@@ -12,7 +12,8 @@
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
     "db:seed:local": "wrangler d1 execute DB --local --file=./db/seed.sql",
     "preview": "opennextjs-cloudflare build && wrangler dev .open-next/worker.js --assets=.open-next/assets",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare upload"
   },
   "dependencies": {
     "@auth/d1-adapter": "^1.11.3",
