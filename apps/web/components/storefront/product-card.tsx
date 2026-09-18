@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useCart } from "./cart-context";
+import { CloseIcon, MinusIcon, PlusIcon, ZoomIcon } from "./icons";
 
 export function ProductCard({
   id,
@@ -23,6 +25,21 @@ export function ProductCard({
   const t = useTranslations("storefront");
   const { qtyOf, add, setQty } = useCart();
   const qty = qtyOf(id);
+  const [zoomed, setZoomed] = useState(false);
+
+  useEffect(() => {
+    if (!zoomed) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomed(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [zoomed]);
 
   return (
     <div
@@ -31,17 +48,30 @@ export function ProductCard({
       }`}
     >
       {photoUrl ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={photoUrl}
-          alt={name}
-          className="h-16 w-16 shrink-0 rounded-lg object-cover"
-          loading="lazy"
-        />
+        <button
+          type="button"
+          onClick={() => setZoomed(true)}
+          aria-label={t("zoomPhoto")}
+          className="relative shrink-0 cursor-zoom-in rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={photoUrl}
+            alt={name}
+            className="h-28 w-28 rounded-xl object-cover sm:h-32 sm:w-32"
+            loading="lazy"
+          />
+          <span
+            aria-hidden
+            className="absolute bottom-1.5 right-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-paper/90 text-ink"
+          >
+            <ZoomIcon className="h-4 w-4" />
+          </span>
+        </button>
       ) : (
         <div
           aria-hidden
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-fog font-display text-xl text-ink-faint"
+          className="flex h-28 w-28 shrink-0 items-center justify-center rounded-xl bg-fog font-display text-2xl text-ink-faint sm:h-32 sm:w-32"
         >
           {name.slice(0, 1).toUpperCase()}
         </div>
@@ -68,8 +98,9 @@ export function ProductCard({
             <button
               type="button"
               onClick={() => add({ id, name, priceTiyin })}
-              className="rounded-lg border border-ink px-4 py-2 text-[14px] font-semibold text-ink active:bg-ink active:text-paper"
+              className="flex items-center gap-1.5 rounded-lg border border-ink px-4 py-2 text-[14px] font-semibold text-ink active:bg-ink active:text-paper"
             >
+              <PlusIcon className="h-4 w-4" />
               {t("add")}
             </button>
           ) : (
@@ -78,9 +109,9 @@ export function ProductCard({
                 type="button"
                 aria-label="−"
                 onClick={() => setQty(id, qty - 1)}
-                className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
+                className="flex h-9 w-9 items-center justify-center active:bg-fog"
               >
-                −
+                <MinusIcon className="h-4 w-4" />
               </button>
               <span className="min-w-5 text-center text-[15px] font-semibold">
                 {qty}
@@ -89,14 +120,39 @@ export function ProductCard({
                 type="button"
                 aria-label="+"
                 onClick={() => setQty(id, qty + 1)}
-                className="flex h-9 w-9 items-center justify-center text-lg leading-none active:bg-fog"
+                className="flex h-9 w-9 items-center justify-center active:bg-fog"
               >
-                +
+                <PlusIcon className="h-4 w-4" />
               </button>
             </div>
           )}
         </div>
       </div>
+      {zoomed && photoUrl ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={name}
+          onClick={() => setZoomed(false)}
+          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-ink/85 p-4"
+        >
+          <button
+            type="button"
+            onClick={() => setZoomed(false)}
+            aria-label={t("closePhoto")}
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink"
+          >
+            <CloseIcon />
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={photoUrl}
+            alt={name}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[85dvh] w-auto max-w-full cursor-default rounded-xl object-contain"
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

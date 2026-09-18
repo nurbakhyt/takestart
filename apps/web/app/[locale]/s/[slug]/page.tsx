@@ -1,9 +1,11 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { CartBar } from "@/components/storefront/cart-bar";
 import { CartProvider } from "@/components/storefront/cart-context";
 import { CategoryNav } from "@/components/storefront/category-nav";
+import { PhoneIcon } from "@/components/storefront/icons";
 import { LocaleSwitcher } from "@/components/storefront/locale-switcher";
 import { ProductCard } from "@/components/storefront/product-card";
 import { formatKZT, normalizeLocale, pickLocale } from "@/lib/locale-text";
@@ -57,6 +59,7 @@ export default async function StorefrontPage({
   ]
     .filter(Boolean)
     .join(", ");
+  const checkoutHref = `/${locale}/s/${shop.slug}/checkout`;
 
   return (
     <CartProvider slug={shop.slug}>
@@ -91,7 +94,9 @@ export default async function StorefrontPage({
 
           <main className="ts-enter px-4 sm:px-6">
             {menu.length === 0 ? (
-              <p className="py-16 text-center text-ink-soft">{t("emptyMenu")}</p>
+              <p className="py-16 text-center text-ink-soft">
+                {t("emptyMenu")}
+              </p>
             ) : (
               menu.map((c) => (
                 <section key={c.id} id={`cat-${c.id}`} className="scroll-mt-32">
@@ -132,9 +137,32 @@ export default async function StorefrontPage({
             )}
           </main>
 
+          <footer className="px-4 pb-10 pt-8 sm:px-6">
+            <div className="rounded-xl border border-line bg-paper p-5 text-center">
+              {metaLine ? (
+                <p className="text-[13px] leading-5 text-ink-faint">
+                  {metaLine}
+                </p>
+              ) : null}
+              <a
+                href={checkoutHref}
+                className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-leaf px-4 py-3.5 text-center text-[16px] font-semibold text-white active:bg-leaf-deep"
+              >
+                <PhoneIcon className="h-5 w-5" />
+                {t("footerCta")}
+              </a>
+              <Link
+                href="/"
+                className="mt-3 inline-block text-[12px] text-ink-faint hover:text-ink-soft"
+              >
+                {t("footerPowered")}
+              </Link>
+            </div>
+          </footer>
+
           <CartBar
             locale={locale}
-            checkoutHref={`/${locale}/s/${shop.slug}/checkout`}
+            checkoutHref={checkoutHref}
             deliveryFeeTiyin={
               shop.fulfillmentMode === "pickup" ? 0 : shop.deliveryFeeTiyin
             }

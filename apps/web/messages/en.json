@@ -56,7 +56,11 @@
     "delivery": "Delivery",
     "pickup": "Pickup",
     "shopNotFound": "Shop not found or hidden",
-    "emptyMenu": "Menu is empty for now — check back later"
+    "emptyMenu": "Menu is empty for now — check back later",
+    "zoomPhoto": "Open photo",
+    "closePhoto": "Close photo",
+    "footerCta": "Order via WhatsApp",
+    "footerPowered": "Storefront powered by TakeStart"
   },
   "cart": {
     "title": "Cart",
