@@ -7,7 +7,10 @@ import {
   unique,
 } from "drizzle-orm/sqlite-core";
 
-const id = () => text("id").primaryKey().$defaultFn(() => crypto.randomUUID());
+const id = () =>
+  text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID());
 const createdAt = () =>
   integer("created_at")
     .notNull()
@@ -139,6 +142,10 @@ export const accounts = sqliteTable(
     scope: text("scope"),
     id_token: text("id_token"),
     session_state: text("session_state"),
+    // @auth/d1-adapter >= 1.11 пишет OAuth 1.0a токены в linkAccount;
+    // без этих колонок Google-вход падает с D1_ERROR "no column named oauth_token".
+    oauth_token: text("oauth_token"),
+    oauth_token_secret: text("oauth_token_secret"),
   },
   (t) => [
     unique("accounts_provider_unique").on(t.provider, t.providerAccountId),
