@@ -33,10 +33,10 @@ export function SiteFooter({
             +7 771 177 98 55 · {whatsappLabel}
           </a>
           <a
-            href="mailto:nurbakhyt+takestart@gmail.com"
+            href="mailto:info@takestart.cc"
             className="text-ink-soft underline-offset-4 hover:underline"
           >
-            nurbakhyt+takestart@gmail.com
+            info@takestart.cc
           </a>
         </address>
       </div>

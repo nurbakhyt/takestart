@@ -41,7 +41,7 @@ function Home({ locale }: { locale: string }) {
             >
               {t("final_secondary")}
             </a>
-            <LocaleSwitcher locale={ty} path="" />
+            <LocaleSwitcher locale={ty} path="/" />
           </div>
         </div>
       </header>
@@ -150,7 +150,9 @@ function Home({ locale }: { locale: string }) {
                   className="absolute bottom-[-13px] left-[17px] top-[68px] w-px bg-line"
                 />
               ) : null}
-              <h3 className="font-display text-[16px] font-semibold">{s.title}</h3>
+              <h3 className="font-display text-[16px] font-semibold">
+                {s.title}
+              </h3>
               <p className="max-w-[62ch] text-[15px] leading-6 text-ink-soft">
                 {s.text}
               </p>
@@ -190,7 +192,10 @@ function Home({ locale }: { locale: string }) {
       </section>
 
       {/* 5. Честно про MVP */}
-      <section id="limits" className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8">
+      <section
+        id="limits"
+        className="mx-auto w-full max-w-6xl px-5 py-12 sm:px-8"
+      >
         <div className="max-w-2xl">
           <h2 className="font-display text-[19px] font-semibold tracking-tight">
             {t("limits_title")}
@@ -202,7 +207,10 @@ function Home({ locale }: { locale: string }) {
             {[t("limit_1"), t("limit_2"), t("limit_3"), t("limit_4")].map(
               (l) => (
                 <li key={l} className="flex gap-2.5">
-                  <span aria-hidden className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-tandoor" />
+                  <span
+                    aria-hidden
+                    className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-tandoor"
+                  />
                   <span>{l}</span>
                 </li>
               ),
