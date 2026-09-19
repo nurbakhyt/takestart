@@ -155,6 +155,7 @@
     "add": "Add",
     "delete": "Delete",
     "edit": "Edit",
+    "aiFill": "Fill with AI",
     "newCategory": "New category",
     "newProduct": "New product",
     "noProducts": "No products yet",
@@ -186,7 +187,8 @@
       "bad_mode": "Invalid fulfillment mode",
       "bad_product": "Check the product fields",
       "not_found": "Not found",
-      "bad_file": "Photo must be JPEG/PNG/WebP up to 2 MB"
+      "bad_file": "Photo must be JPEG/PNG/WebP up to 2 MB",
+      "ai_failed": "Couldn't translate, try again"
     }
   }
 }

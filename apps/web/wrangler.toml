@@ -23,6 +23,12 @@ migrations_dir = "db/migrations"
 binding = "SHOP_IMAGES"
 bucket_name = "takestart-images"
 
+# Наш AI-сервис (apps/ai): перевод названий ru/kk/en. У takestart-ai
+# workers_dev = false, поэтому единственный вход — этот service binding.
+[[services]]
+binding = "AI_SERVICE"
+service = "takestart-ai"
+
 [observability.logs]
 enabled = true
 invocation_logs = true
