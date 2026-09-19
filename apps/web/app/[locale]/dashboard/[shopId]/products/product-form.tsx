@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { LocalizedNames } from "@/components/dashboard/localized-names";
 import { PhotoField } from "@/components/dashboard/photo-field";
 import { saveProduct } from "../../actions";
 
@@ -43,20 +44,18 @@ export async function ProductForm({
         initialUrl={defaults?.photoR2Key ? `/api/images/${defaults.photoR2Key}` : null}
       />
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[14px] font-medium">{t("nameRu")} *</span>
-          <input name="nameRu" required maxLength={80} defaultValue={defaults?.nameRu ?? ""} className={inputCls} />
-        </label>
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[14px] font-medium">{t("nameKk")}</span>
-          <input name="nameKk" maxLength={80} defaultValue={defaults?.nameKk ?? ""} className={inputCls} />
-        </label>
-        <label className="flex flex-col gap-1.5">
-          <span className="text-[14px] font-medium">{t("nameEn")}</span>
-          <input name="nameEn" maxLength={80} defaultValue={defaults?.nameEn ?? ""} className={inputCls} />
-        </label>
-      </div>
+      <LocalizedNames
+        shopId={shopId}
+        entity="product"
+        defaults={
+          defaults
+            ? { ru: defaults.nameRu, kk: defaults.nameKk, en: defaults.nameEn }
+            : null
+        }
+        maxLength={80}
+        inputClassName={inputCls}
+        requiredRu
+      />
 
       <label className="flex flex-col gap-1.5">
         <span className="text-[14px] font-medium">{t("desc")}</span>

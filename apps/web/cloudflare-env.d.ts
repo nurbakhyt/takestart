@@ -5,6 +5,8 @@ declare global {
     DB: D1Database;
     /** Наш R2-бакет фото (имя IMAGES занято адаптером под image optimization). */
     SHOP_IMAGES: R2Bucket;
+    /** Воркер apps/ai (service binding из wrangler.toml). */
+    AI_SERVICE: Fetcher;
     AUTH_SECRET?: string;
     AUTH_GOOGLE_ID?: string;
     AUTH_GOOGLE_SECRET?: string;

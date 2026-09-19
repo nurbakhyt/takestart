@@ -3,6 +3,7 @@ import { asc, eq } from "drizzle-orm";
 import { getDb } from "@/db";
 import { categories } from "@/db/schema";
 import { normalizeLocale } from "@/lib/locale-text";
+import { LocalizedNames } from "@/components/dashboard/localized-names";
 import { requireShop } from "@/lib/dashboard";
 import { createCategory, deleteCategory, renameCategory } from "../../actions";
 
@@ -38,11 +39,14 @@ export default async function CategoriesPage({
         <form action={createCategory} className="flex flex-col gap-2.5">
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="shopId" value={shop.id} />
-          <div className="grid grid-cols-3 gap-2">
-            <input name="nameRu" required maxLength={60} placeholder="RU *" className={inputCls} />
-            <input name="nameKk" maxLength={60} placeholder="KZ" className={inputCls} />
-            <input name="nameEn" maxLength={60} placeholder="EN" className={inputCls} />
-          </div>
+          <LocalizedNames
+            shopId={shop.id}
+            entity="category"
+            maxLength={60}
+            inputClassName={inputCls}
+            labels={false}
+            requiredRu
+          />
           {err ? <p className="text-[14px] text-tandoor">{t(`errors.${err}`)}</p> : null}
           <button
             type="submit"
@@ -57,25 +61,37 @@ export default async function CategoriesPage({
         <form
           key={c.id}
           action={renameCategory}
-          className="flex items-center gap-2 border-b border-line py-2.5"
+          className="flex flex-col gap-2 border-b border-line py-2.5 sm:flex-row sm:items-start"
         >
           <input type="hidden" name="locale" value={locale} />
           <input type="hidden" name="shopId" value={shop.id} />
           <input type="hidden" name="id" value={c.id} />
-          <input name="nameRu" required maxLength={60} defaultValue={c.nameRu} className={`${inputCls} min-w-0 flex-1`} />
-          <button
-            type="submit"
-            className="shrink-0 rounded-lg border border-line bg-paper px-3 py-2 text-[13px] font-medium"
-          >
-            {t("save")}
-          </button>
-          <button
-            type="submit"
-            formAction={deleteCategory}
-            className="shrink-0 rounded-lg border border-tandoor/40 px-3 py-2 text-[13px] font-medium text-tandoor"
-          >
-            {t("delete")}
-          </button>
+          <div className="min-w-0 flex-1">
+            <LocalizedNames
+              shopId={shop.id}
+              entity="category"
+              defaults={{ ru: c.nameRu, kk: c.nameKk, en: c.nameEn }}
+              maxLength={60}
+              inputClassName={inputCls}
+              labels={false}
+              requiredRu
+            />
+          </div>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="submit"
+              className="rounded-lg border border-line bg-paper px-3 py-2 text-[13px] font-medium"
+            >
+              {t("save")}
+            </button>
+            <button
+              type="submit"
+              formAction={deleteCategory}
+              className="rounded-lg border border-tandoor/40 px-3 py-2 text-[13px] font-medium text-tandoor"
+            >
+              {t("delete")}
+            </button>
+          </div>
         </form>
       ))}
     </div>
