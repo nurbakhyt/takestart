@@ -12,7 +12,8 @@
 Cloudflare D1 (Drizzle ORM) + R2 (фото товаров), Auth.js v5 (Google + email),
 next-intl (ru/kk/en).
 
-**`apps/ai`** — Cloudflare Workers + AI binding (sentiment analysis, `@cf/huggingface/distilbert-sst-2-int8`).
+**`apps/ai`** — Cloudflare Workers AI: сервис перевода названий товаров и категорий между ru/kk/en
+(`POST /translate`, модель `@cf/openai/gpt-oss-120b`). Вызывается только из `apps/web` по service binding.
 
 ## Локальный запуск
 
@@ -69,6 +70,9 @@ Preview идёт через `opennextjs-cloudflare upload` (скрипт `upload
   lib/                       # whatsapp-чек, D1-клиент, R2-хелперы
   messages/                  # ru/kk/en
 
-apps/ai/                     # Cloudflare Workers AI (sentiment analysis)
-  src/index.ts               # воркер с AI binding
+apps/ai/                     # Cloudflare Workers AI: перевод названий ru/kk/en
+  src/index.ts               # воркер: POST /translate
+  src/prompt.ts              # сборка промпта под пару языков
+  src/parse.ts               # терпимый разбор ответа модели
+  src/translate.ts           # вызов модели, повтор при срывe формы
 ```
