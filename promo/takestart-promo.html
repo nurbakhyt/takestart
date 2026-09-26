@@ -4,147 +4,289 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TakeStart — промо 20 сек (аниматик)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:#1a1a1a; font-family:-apple-system,'Segoe UI',Roboto,sans-serif; display:flex; gap:32px; justify-content:center; align-items:flex-start; min-height:100vh; padding:24px; color:#fff; }
-  .side { max-width:300px; padding-top:12px; }
-  .side h1 { font-size:20px; margin-bottom:8px; }
-  .side p { font-size:13px; line-height:1.6; opacity:.7; margin-bottom:12px; }
-  .side kbd { background:#333; border-radius:4px; padding:1px 6px; font-size:12px; }
-  .side button { background:#FF6B2C; border:none; color:#fff; font-size:15px; font-weight:700; padding:12px 24px; border-radius:12px; cursor:pointer; margin:4px 8px 4px 0; }
-  .side button.ghost { background:#333; }
-  .vo-line { font-size:13px; background:#262626; border-left:3px solid #FF6B2C; padding:8px 10px; border-radius:0 8px 8px 0; margin-bottom:8px; opacity:.45; transition:opacity .3s; }
-  .vo-line.active { opacity:1; }
-  .vo-line b { color:#FF6B2C; font-size:11px; display:block; margin-bottom:2px; }
-  /* STAGE 9:16 */
-  .stage-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; }
-  .stage { width:405px; height:720px; border-radius:28px; overflow:hidden; position:relative; background:#FFF8F0; box-shadow:0 20px 80px rgba(0,0,0,.6); }
-  .progress { position:absolute; top:0; left:0; height:4px; background:#FF6B2C; width:0%; z-index:50; }
-  .time { font-size:12px; opacity:.6; font-variant-numeric:tabular-nums; }
-  .scene { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 30px; opacity:0; transform:scale(1.04); transition:opacity .45s, transform .45s; pointer-events:none; }
-  .scene.on { opacity:1; transform:scale(1); pointer-events:auto; }
-  .badge { font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#C24A0E; background:#FFE9DC; padding:6px 14px; border-radius:99px; margin-bottom:14px; }
-  .title { font-size:30px; font-weight:800; color:#1a1a1a; text-align:center; line-height:1.15; margin-bottom:18px; }
-  .title span { color:#D14E0E; }
-  /* phone */
-  .phone { width:200px; height:400px; background:#111; border-radius:30px; padding:10px; box-shadow:0 12px 40px rgba(0,0,0,.25); position:relative; }
-  .screen { background:#ECE5DD; border-radius:20px; height:100%; overflow:hidden; position:relative; display:flex; flex-direction:column; }
-  .wa-head { background:#075E54; color:#fff; font-size:12px; font-weight:700; padding:10px 12px; }
-  .chat { padding:10px; display:flex; flex-direction:column; gap:6px; flex:1; }
-  .msg { max-width:85%; font-size:11px; padding:7px 9px; border-radius:8px; line-height:1.35; color:#1a1a1a; }
-  .msg.in { background:#fff; align-self:flex-start; }
-  .msg.out { background:#DCF8C6; align-self:flex-end; }
-  .msg.check { background:#fff; align-self:flex-start; border:1.5px solid #25D366; }
-  .msg.check b { display:block; font-size:11px; margin-bottom:2px; }
-  .msg.check .sum { color:#128C4B; font-weight:800; margin-top:4px; }
-  .chaos { animation:shake .5s infinite; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-3px) rotate(-1deg)} 75%{transform:translateX(3px) rotate(1deg)} }
-  .shop-card { background:#fff; border-radius:12px; padding:10px; margin:6px 10px; font-size:11px; color:#1a1a1a; box-shadow:0 2px 8px rgba(0,0,0,.08); display:flex; justify-content:space-between; align-items:center; }
-  .shop-card .add { background:#25D366; color:#fff; border-radius:8px; padding:4px 10px; font-weight:800; }
-  .cart-bar { background:#1a1a1a; color:#fff; font-size:12px; font-weight:700; margin:0 10px 10px; border-radius:12px; padding:10px; text-align:center; }
-  .timer-chip { position:absolute; top:12px; right:12px; background:#1a1a1a; color:#fff; font-size:13px; font-weight:800; border-radius:99px; padding:6px 12px; font-variant-numeric:tabular-nums; }
-  .qr { width:170px; background:#fff; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; border:3px dashed #FF6B2C; margin:6px 0 14px; padding:12px; }
-  .qr img { width:130px; height:130px; display:block; }
-  .qr small { font-size:11px; font-weight:700; color:#1a1a1a; }
-  .logo { font-size:38px; font-weight:900; color:#1a1a1a; }
-  .logo span { color:#FF6B2C; }
-  .sub { max-width:300px; min-height:44px; text-align:center; font-size:14px; color:#fff; background:rgba(0,0,0,.75); border-radius:12px; padding:10px 14px; line-height:1.4; }
-  .sub-wrap { position:absolute; bottom:18px; left:18px; right:18px; display:flex; justify-content:center; z-index:40; }
-  .pop { animation:pop .5s cubic-bezier(.2,1.6,.4,1) both; }
-  @keyframes pop { from{transform:scale(.6); opacity:0} to{transform:scale(1); opacity:1} }
-  .rise { animation:rise .5s ease both; }
-  @keyframes rise { from{transform:translateY(16px); opacity:0} to{transform:none; opacity:1} }
-  .d1{animation-delay:.15s}.d2{animation-delay:.35s}.d3{animation-delay:.6s}.d4{animation-delay:.9s}.d5{animation-delay:1.2s}
-  .ping { animation:ping 1s ease infinite; }
-  @keyframes ping { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
-  @media (max-width:900px){ body{flex-direction:column; align-items:center} .side{max-width:405px} }
+  /* ── Токены дизайна: apps/web/app/globals.css @theme ───────────────── */
+  :root{
+    --paper:#ffffff; --fog:#e9efe7; --fog-deep:#dde7da;
+    --ink:#20382c; --ink-soft:#4a5f53; --ink-faint:#7d8f84;
+    --line:#d8e0d5; --leaf:#14663b; --leaf-deep:#0e4d2c; --tandoor:#b3271e; --tag:#ffc53d;
+    --font-display:"Unbounded","Golos Text",system-ui,sans-serif;
+    --font-body:"Golos Text",system-ui,-apple-system,sans-serif;
+    /* WhatsApp — реальные цвета мессенджера */
+    --wa-wall:#efe7de; --wa-head:#f0f2f5; --wa-in:#ffffff; --wa-out:#d9fdd3;
+    --wa-tick:#53bdeb; --wa-meta:#667781; --wa-bar:#f0f2f5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#15171a;font-family:var(--font-body);color:#fff;display:flex;gap:32px;justify-content:center;align-items:flex-start;min-height:100vh;padding:24px;-webkit-font-smoothing:antialiased}
+  .side{max-width:320px;padding-top:12px}
+  .side h1{font-family:var(--font-display);font-size:17px;font-weight:600;margin-bottom:8px}
+  .side p{font-size:13px;line-height:1.6;opacity:.65;margin-bottom:12px}
+  .side kbd{background:#2c2f33;border-radius:4px;padding:1px 6px;font-size:12px}
+  .side button{background:var(--leaf);border:none;color:#fff;font-size:15px;font-weight:600;padding:12px 24px;border-radius:8px;cursor:pointer;margin:4px 8px 4px 0;font-family:var(--font-body)}
+  .side button.ghost{background:#2c2f33}
+  .side-link{display:inline-block;margin-top:8px;font-size:13px;font-weight:600;color:#7fbf9c;text-decoration:none;border:1px solid #2f4a3c;border-radius:8px;padding:9px 14px}
+  .side-link:hover{background:#1c2a22}
+  .vo-line{font-size:13px;background:#202327;border-left:3px solid var(--leaf);padding:8px 10px;border-radius:0 8px 8px 0;margin-bottom:8px;opacity:.45;transition:opacity .3s}
+  .vo-line.active{opacity:1}
+  .vo-line b{color:#7fbf9c;font-size:11px;display:block;margin-bottom:2px}
+
+  /* ── Сцена 9:16 ─────────────────────────────────────────────────── */
+  .stage-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .stage{width:405px;height:720px;border-radius:20px;overflow:hidden;position:relative;background:var(--fog);box-shadow:0 20px 70px rgba(0,0,0,.6)}
+  .progress{position:absolute;top:0;left:0;height:3px;background:var(--tandoor);width:0%;z-index:60}
+  .time{font-size:12px;opacity:.6;font-variant-numeric:tabular-nums}
+  .scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px 26px;opacity:0;transform:scale(1.03);transition:opacity .45s,transform .45s;pointer-events:none}
+  .scene.on{opacity:1;transform:scale(1);pointer-events:auto}
+  .badge{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);padding:5px 12px;border-radius:6px;margin-bottom:14px}
+  .title{font-family:var(--font-display);font-weight:600;font-size:26px;line-height:1.18;color:var(--ink);text-align:center;letter-spacing:-.02em;margin-bottom:16px}
+  .title span{color:var(--tandoor)}
+  .note{font-size:13px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.5}
+
+  /* Чековая лента: бумага с боковыми линейками */
+  .tape{background:var(--paper);border-left:1px solid var(--line);border-right:1px solid var(--line);width:100%;max-width:300px;overflow:hidden}
+  .zig-top{--zz:9px;clip-path:polygon(0 100%,0 var(--zz),5% 0,10% var(--zz),15% 0,20% var(--zz),25% 0,30% var(--zz),35% 0,40% var(--zz),45% 0,50% var(--zz),55% 0,60% var(--zz),65% 0,70% var(--zz),75% 0,80% var(--zz),85% 0,90% var(--zz),95% 0,100% var(--zz),100% 100%);padding-top:calc(var(--zz) + 6px)}
+  .zig-bot{--zz:9px;clip-path:polygon(0 0,100% 0,100% calc(100% - var(--zz)),95% 100%,90% calc(100% - var(--zz)),85% 100%,80% calc(100% - var(--zz)),75% 100%,70% calc(100% - var(--zz)),65% 100%,60% calc(100% - var(--zz)),55% 100%,50% calc(100% - var(--zz)),45% 100%,40% calc(100% - var(--zz)),35% 100%,30% calc(100% - var(--zz)),25% 100%,20% calc(100% - var(--zz)),15% 100%,10% calc(100% - var(--zz)),5% 100%,0 calc(100% - var(--zz)));padding-bottom:calc(var(--zz) + 6px)}
+  .leader{flex:1 1 20px;min-width:20px;border-bottom:2px dotted var(--line);transform:translateY(-4px)}
+  .stamp{position:relative;display:inline-block;isolation:isolate;padding:0 2px}
+  .stamp::before{content:"";position:absolute;inset:.05em -.3em 0 -.3em;background:var(--tag);transform:rotate(-1.2deg);z-index:-1;border-radius:2px}
+
+  /* Магазин (витрина) */
+  .shop-head{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+  .shop-name{font-family:var(--font-display);font-weight:600;font-size:17px;line-height:1.2;color:var(--ink)}
+  .shop-meta{font-size:12px;color:var(--ink-faint);margin-top:4px;line-height:1.45}
+  .tabs{display:flex;gap:14px;padding:0 16px;border-bottom:1px solid var(--line)}
+  .tab{position:relative;padding:9px 1px;font-size:13px;font-weight:500;color:var(--ink-soft);white-space:nowrap}
+  .tab.on{color:var(--ink)}
+  .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink)}
+  .row{display:flex;align-items:baseline;gap:7px;padding:11px 16px;border-bottom:1px solid var(--line)}
+  .row .nm{font-size:14px;font-weight:500;color:var(--ink)}
+  .row .pr{font-size:14px;font-weight:600;color:var(--tandoor);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .row .ds{font-size:12px;color:var(--ink-faint);margin-top:2px}
+  .qty{margin-left:auto;display:flex;align-items:center;gap:9px;flex-shrink:0}
+  .qbtn{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center}
+  .qbtn.add{border-color:var(--leaf);background:var(--leaf);color:var(--paper)}
+  .qnum{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--ink);min-width:14px;text-align:center}
+  .row.off{opacity:.6}
+  .row.off .pr{color:var(--ink-faint)}
+  .bar-ink{background:var(--ink);color:var(--paper);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:8px;margin:12px}
+  .bar-ink .t{font-size:13px;font-weight:500}
+  .bar-ink .s{font-family:var(--font-display);font-size:15px;font-weight:600}
+  .link{font-size:12px;color:var(--ink-faint);text-align:center;margin-top:9px;font-variant-numeric:tabular-nums}
+  .btn-leaf{background:var(--leaf);color:var(--paper);font-size:14px;font-weight:600;padding:11px 18px;border-radius:8px;width:100%;text-align:center;margin-top:12px}
+
+  /* Кабинет продавца */
+  .dash-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--line)}
+  .dash-title{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--ink)}
+  .chip{font-size:11px;font-weight:600;color:var(--ink-soft);border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+  .dash-hero{background:var(--fog);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;gap:11px}
+  .ava{width:38px;height:38px;border-radius:8px;background:var(--leaf);color:var(--paper);font-family:var(--font-display);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .dash-hero .nm{font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--ink)}
+  .dash-hero .sl{font-size:11px;color:var(--ink-faint);margin-top:2px}
+  .btn-ink{background:var(--ink);color:var(--paper);font-size:14px;font-weight:500;padding:11px;border-radius:8px;text-align:center;margin:12px 16px}
+  .dash-row{display:flex;align-items:center;gap:11px;padding:11px 16px;border-bottom:1px solid var(--line)}
+  .dash-row .nm{font-size:14px;font-weight:500;color:var(--ink);flex:1;min-width:0}
+  .dash-row .pr{font-family:var(--font-display);font-size:12px;font-weight:500;color:var(--ink-soft)}
+  .dbtn{font-size:12px;font-weight:500;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:6px 10px;border-radius:6px}
+  .dbtn.del{border-color:rgba(179,39,30,.4);color:var(--tandoor);background:var(--paper)}
+  .stopped{color:var(--tandoor);font-size:12px}
+  .toast{background:var(--ink);color:var(--paper);font-size:12px;font-weight:500;padding:9px 13px;border-radius:8px;display:flex;align-items:center;gap:8px;margin:10px 16px 0}
+  .toast i{width:14px;height:14px;border-radius:50%;background:var(--leaf);color:#fff;font-style:normal;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .timer{position:absolute;top:12px;right:14px;z-index:55;background:var(--ink);color:var(--paper);font-family:var(--font-display);font-size:12px;font-weight:600;border-radius:6px;padding:5px 9px;font-variant-numeric:tabular-nums}
+
+  /* WhatsApp */
+  .phone{width:264px;border-radius:26px;background:#000;padding:7px;overflow:hidden;position:relative}
+  .scr{background:var(--wa-wall);height:100%;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+  .status{height:20px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;font-size:10px;font-weight:600;color:#111b21;background:var(--wa-bar);flex-shrink:0}
+  .wa-head{background:var(--wa-head);padding:6px 10px 8px;display:flex;align-items:center;gap:9px;border-bottom:1px solid #e6e6e6;flex-shrink:0}
+  .wa-ava{width:30px;height:30px;border-radius:50%;background:var(--leaf);color:#fff;font-family:var(--font-display);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .wa-name{font-size:12.5px;font-weight:600;color:#111b21;line-height:1.2}
+  .wa-on{font-size:10.5px;color:var(--leaf);margin-top:1px}
+  .wa-ic{margin-left:auto;display:flex;gap:11px;color:#54656f}
+  .chat{flex:1;padding:9px 8px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+  .day{align-self:center;background:#e9edef;color:#54656f;font-size:10px;font-weight:500;padding:4px 9px;border-radius:8px;margin-bottom:2px}
+  .bub{max-width:80%;padding:5px 8px 4px;border-radius:8px;font-size:12px;line-height:1.4;color:#111b21;position:relative;box-shadow:0 1px .5px rgba(11,20,26,.13)}
+  .bub.in{align-self:flex-start;background:var(--wa-in);border-top-left-radius:0}
+  .bub.out{align-self:flex-end;background:var(--wa-out);border-top-right-radius:0}
+  .bub .t{display:inline-block;float:right;font-size:9.5px;color:var(--wa-meta);margin:5px 0 0 8px;line-height:1}
+  .ticks{color:var(--wa-tick);font-weight:700;letter-spacing:-1px}
+  .rcpt{font-size:11.5px;line-height:1.5;white-space:pre-line;font-variant-numeric:tabular-nums}
+  .rcpt b{font-weight:600}
+  .typing{align-self:flex-start;background:var(--wa-in);border-radius:8px;border-top-left-radius:0;padding:8px 11px;display:flex;gap:3px}
+  .typing i{width:5px;height:5px;border-radius:50%;background:#9aa4a8;animation:blink 1.2s infinite}
+  .typing i:nth-child(2){animation-delay:.18s}.typing i:nth-child(3){animation-delay:.36s}
+  @keyframes blink{0%,60%,100%{opacity:.28}30%{opacity:1}}
+  .chaos{animation:shake .55s infinite}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2.5px) rotate(-.7deg)}75%{transform:translateX(2.5px) rotate(.7deg)}}
+  .composer{background:var(--wa-bar);border-top:1px solid #e6e6e6;padding:7px 9px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .composer .inp{flex:1;background:#fff;border-radius:8px;padding:7px 11px;font-size:11.5px;color:#54656f}
+
+  /* Финал */
+  .logo{font-family:var(--font-display);font-weight:700;font-size:34px;color:var(--ink);letter-spacing:-.02em}
+  .qr{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:7px;margin:16px 0 12px}
+  .qr img{width:124px;height:124px;display:block}
+  .qr small{font-size:12px;font-weight:500;color:var(--ink-soft)}
+
+  .sub-wrap{position:absolute;bottom:16px;left:16px;right:16px;display:flex;justify-content:center;z-index:50}
+  .sub{max-width:320px;min-height:40px;text-align:center;font-size:13.5px;color:#fff;background:rgba(0,0,0,.78);border-radius:8px;padding:9px 13px;line-height:1.4}
+  .pop{animation:pop .5s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
+  .rise{animation:rise .5s ease both}
+  @keyframes rise{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+  .d2{animation-delay:.3s}.d3{animation-delay:.6s}.d4{animation-delay:.9s}.d5{animation-delay:1.2s}
+  .ping{animation:ping 1.4s ease infinite}
+  @keyframes ping{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+  .pop.ping{animation:pop .5s cubic-bezier(.2,1.6,.4,1) both,ping 1.4s ease .6s infinite}
+  @media (max-width:900px){body{flex-direction:column;align-items:center}.side{max-width:405px}}
+  /* Чистый режим записи: ?clean=1 */
+  body.clean{padding:0;align-items:center;justify-content:center}
+  body.clean .side,body.clean .time,body.clean .sub-wrap,body.clean .progress,body.clean .badge{display:none}
 </style>
 </head>
 <body>
 <div class="side">
   <h1>TakeStart · аниматик 20 сек</h1>
-  <p>Нажми <kbd>▶ Играть</kbd> и пиши экран (OBS / QuickTime). Вертикаль 405×720 — готово под Reels / TikTok. Озвучку наложишь поверх, субтитры уже в тайминге.</p>
-  <button id="play">▶ Играть 20 сек</button><button id="replay" class="ghost">↺ Сначала</button>
-  <p style="margin-top:14px">Текст диктора подсвечивается по ходу:</p>
+  <p>Открой <kbd>?clean=1</kbd> и пиши экран (OBS / QuickTime <kbd>Cmd+Shift+5</kbd>) — ролик поедет сам. Интерфейсы TakeStart повторяют реальный дизайн (чековая лента), WhatsApp — настоящий.</p>
+  <button id="play">▶ Играть 20 сек</button><button id="replay" class="ghost">↺ Сначала</button><a id="cleanLink" class="side-link" href="?clean=1" target="_blank">🎬 Чистый режим для записи</a>
+  <p style="margin-top:14px">Текст диктора по ходу:</p>
   <div id="vo"></div>
 </div>
 <div class="stage-wrap">
   <div class="stage" id="stage">
     <div class="progress" id="bar"></div>
-    <!-- 1 -->
+
+    <!-- 1 · Боль: WhatsApp продавца забит личными вопросами -->
     <div class="scene" data-scene="0">
-      <div class="badge">0–3 сек · боль</div>
-      <div class="title">Заказы теряются <span>в личке?</span></div>
-      <div class="phone"><div class="screen chaos">
-        <div class="wa-head">💬 Клиенты · 47 непрочитанных</div>
-        <div class="chat">
-          <div class="msg in">а это с собой??</div>
-          <div class="msg in">а цену скиньте…</div>
-          <div class="msg in">я вчера заказывала, где мой?? 😡</div>
-          <div class="msg out">секунду, ищу ваш заказ…</div>
-          <div class="msg in">алооо??</div>
+      <div class="badge">0–4 сек · боль</div>
+      <div class="title">Заказы теряются <span>в личке</span></div>
+      <div class="phone"><div class="scr">
+        <div class="status"><span>21:47</span><span>●●● ▮</span></div>
+        <div class="wa-head">
+          <div class="wa-ava">DF</div>
+          <div><div class="wa-name">Dala Food</div><div class="wa-on">в сети</div></div>
+          <div class="wa-ic"><span>⌕</span><span>☎</span></div>
         </div>
+        <div class="chat chaos">
+          <div class="bub in">Сколько стоит лагман? <span class="t">21:41 ✓✓</span></div>
+          <div class="bub in">А с собой можно? <span class="t">21:42 ✓</span></div>
+          <div class="bub out">Добрый! Лагман 1 200 ₸, с собой можно <span class="t">21:43 <span class="ticks">✓✓</span></span></div>
+          <div class="bub in">Кстати, а где мой заказ, вчера ждал( <span class="t">21:44 ✓</span></div>
+          <div class="bub in">Алоо, вы вообще на связи? <span class="t">21:46 ✓</span></div>
+        </div>
+        <div class="composer"><div class="inp">Сообщение</div></div>
       </div></div>
     </div>
-    <!-- 2 -->
+
+    <!-- 2 · Решение: кабинет, товары за 10 минут -->
     <div class="scene" data-scene="1">
-      <div class="badge">3–6 сек · решение</div>
+      <div class="badge">4–7,5 сек · решение</div>
       <div class="title">Витрина <span>за 10 минут</span></div>
-      <div class="phone"><div class="screen">
-        <div class="wa-head" style="background:#FF6B2C">🧡 TakeStart · мой магазин</div>
-        <div class="timer-chip" id="timer">07:32</div>
-        <div class="chat">
-          <div class="shop-card pop">☕ Капучино — 890 ₸ <span class="add">✓</span></div>
-          <div class="shop-card pop d2">🍰 Чизкейк — 1 200 ₸ <span class="add">✓</span></div>
-          <div class="shop-card pop d4">🥐 Круассан — 650 ₸ <span class="add">+</span></div>
+      <div class="timer" id="timer">07:32</div>
+      <div class="tape" style="max-width:300px">
+        <div class="dash-head">
+          <div class="dash-title">Dala Food</div>
+          <div class="chip">RU · KZ · EN</div>
         </div>
-      </div></div>
+        <div class="dash-hero">
+          <div class="ava">DF</div>
+          <div><div class="nm">Dala Food</div><div class="sl">takestart.kz/ru/s/dala-food</div></div>
+        </div>
+        <div class="toast"><i>✓</i> Товар «Сорпа» добавлен</div>
+        <div class="btn-ink">+ Новый товар</div>
+        <div class="dash-row"><div class="nm">Лагман<br><span class="pr">1 200 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
+        <div class="dash-row"><div class="nm">Плов<br><span class="pr">1 100 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
+        <div class="dash-row rise d2"><div class="nm">Сорпа<br><span class="pr">700 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
+        <div class="dash-row"><div class="nm">Бешбармак, <span class="stopped">остановлен</span><br><span class="pr">1 500 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
+      </div>
     </div>
-    <!-- 3 -->
+
+    <!-- 3 · Покупатель: витрина и корзина -->
     <div class="scene" data-scene="2">
-      <div class="badge">6–10 сек · покупатель</div>
+      <div class="badge">7,5–11 сек · покупатель</div>
       <div class="title">Ссылка или QR — <span>и всё</span></div>
-      <div class="phone"><div class="screen">
-        <div class="wa-head" style="background:#1a1a1a">🔗 takestart.kz/s/dami</div>
-        <div class="chat">
-          <div class="shop-card rise">☕ Капучино ×2 <span class="add">− 2 +</span></div>
-          <div class="shop-card rise d2">🍰 Чизкейк ×1 <span class="add">− 1 +</span></div>
+      <div class="tape zig-top" style="max-width:300px">
+        <div class="shop-head">
+          <div class="shop-name">Dala Food</div>
+          <div class="shop-meta">Алматы, ул. Абая 10, доставка и самовывоз, 500 ₸</div>
         </div>
-        <div class="cart-bar pop d4 ping">🛒 Корзина · 2 980 ₸ →</div>
-      </div></div>
+        <div class="tabs"><span class="tab">Супы</span><span class="tab on">Горячее</span><span class="tab">Напитки</span></div>
+        <div class="row">
+          <div><div class="nm">Лагман</div><div class="ds">Домашняя лапша, говядина, овощи</div></div>
+          <div class="qty"><span class="qbtn">−</span><span class="qnum">2</span><span class="qbtn add">+</span></div>
+        </div>
+        <div class="row" style="border-bottom:0;padding-top:9px;padding-bottom:9px">
+          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px">Лагман ×2</span><span class="leader"></span><span class="pr">2 400 ₸</span>
+        </div>
+        <div class="row">
+          <div><div class="nm">Чай с молоком</div><div class="ds">Чайник 0.8 л</div></div>
+          <div class="qty"><span class="qbtn">−</span><span class="qnum">1</span><span class="qbtn add">+</span></div>
+        </div>
+        <div class="row" style="border-bottom:0;padding-top:9px;padding-bottom:9px">
+          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px">Чай с молоком ×1</span><span class="leader"></span><span class="pr">500 ₸</span>
+        </div>
+        <div class="row off"><div class="nm">Бешбармак, <span style="color:var(--tandoor)">остановлен</span><br><span class="ds">Конина, казы, тесто, лук</span></div></div>
+        <div class="bar-ink pop d4 ping"><span class="t">Корзина, 3 позиции</span><span class="s">2 900 ₸</span></div>
+        <div class="btn-leaf pop d5">Заказать в WhatsApp</div>
+        <div class="link">takestart.kz/ru/s/dala-food</div>
+      </div>
     </div>
-    <!-- 4 -->
+
+    <!-- 4 · Заказ приходит продавцу одной карточкой -->
     <div class="scene" data-scene="3">
-      <div class="badge">10–15 сек · магия чека</div>
-      <div class="title">Заказ — <span>одной карточкой</span> в WhatsApp</div>
-      <div class="phone"><div class="screen">
-        <div class="wa-head">💬 Мой магазин · WhatsApp</div>
-        <div class="chat">
-          <div class="msg check pop">🧾 <b>Новый заказ #128</b>☕ Капучино ×2 — 1 780 ₸<br>🍰 Чизкейк ×1 — 1 200 ₸<br>📍 Абая 44, кв 12<br>📞 +7 701 234-56-78<div class="sum">Итого: 2 980 ₸</div></div>
-          <div class="msg out pop d3">Приняли! Будет готово через 15 минут ✅</div>
+      <div class="badge">11–15 сек · заказ</div>
+      <div class="title">Чек <span>одной карточкой</span> в WhatsApp</div>
+      <div class="phone"><div class="scr">
+        <div class="status"><span>21:52</span><span>●●● ▮</span></div>
+        <div class="wa-head">
+          <div class="wa-ava" style="background:var(--tandoor)">+7</div>
+          <div><div class="wa-name">Айгерим</div><div class="wa-on">+7 701 234-56-78</div></div>
+          <div class="wa-ic"><span>⌕</span><span>☎</span></div>
         </div>
+        <div class="chat">
+          <div class="day">Сегодня</div>
+          <div class="bub out rcpt pop"><b>🧾 Заказ DAL-260927-0042</b>
+Dala Food
+— Лагман ×2 — 2 400 ₸
+— Чай с молоком ×1 — 500 ₸
+📦 Доставка: 500 ₸
+<b>Итого: <span class="stamp">3 400 ₸</span></b>
+Имя: Айгерим
+Тел: +77012345678
+Адрес: Алматы, Жандосова 14, кв 8<span class="t">21:52 <span class="ticks">✓✓</span></span></div>
+          <div class="bub out pop d3">Приняли! Будет через 15 минут <span class="t">21:52 <span class="ticks">✓✓</span></span></div>
+          <div class="typing"><i></i><i></i><i></i></div>
+        </div>
+        <div class="composer"><div class="inp">Сообщение</div></div>
       </div></div>
     </div>
-    <!-- 5 -->
+
+    <!-- 5 · Финал -->
     <div class="scene" data-scene="4">
       <div class="badge">15–20 сек · финал</div>
-      <div class="logo">Take<span>Start</span> 🧡</div>
-      <div class="qr"><img src="qr.svg" alt="QR — takestart.kz"><small>takestart.kz</small></div>
-      <div class="title" style="font-size:22px">Открыл ссылку —<br><span>принял заказ</span></div>
-      <div style="font-size:13px;color:#555;font-weight:600">Без сайтов и приложений</div>
+      <div class="tape zig-top zig-bot" style="max-width:250px;background:var(--paper)">
+        <div style="padding:26px 20px;text-align:center">
+          <div class="logo">TakeStart</div>
+          <div class="qr"><img src="qr.svg" alt="QR — takestart.kz"><small>takestart.kz</small></div>
+          <div style="font-family:var(--font-display);font-size:16px;font-weight:600;line-height:1.25;color:var(--ink)">Открыл ссылку —<br><span style="color:var(--leaf)">принял заказ</span></div>
+          <div style="font-size:12px;color:var(--ink-faint);margin-top:9px">без сайтов и приложений</div>
+        </div>
+      </div>
     </div>
+
     <div class="sub-wrap"><div class="sub" id="sub">Нажми «Играть»…</div></div>
   </div>
   <div class="time" id="clock">0.0 / 20 сек · 9:16 · 405×720</div>
 </div>
 <script>
 const TOTAL = 20;
-const SCENES = [ // [start, end]
-  [0,3],[3,6],[6,10],[10,15],[15,20]
-];
+const SCENES = [[0,4],[4,7.5],[7.5,11],[11,15],[15,20]];
+// 4,0 · 3,5 · 3,5 · 4,0 · 5,0 сек — под темп тёплой озвучки (~2,2 слова/сек)
+const fmtSec = (n) => String(n).replace('.', ',');
 const SUBS = [
   "У вас вкусно. А заказы теряются в личке?",
-  "TakeStart — витрина для бизнеса за 10 минут.",
+  "TakeStart — витрина для бизнеса за десять минут.",
   "Кидаете ссылку или QR — покупатель собирает корзину…",
   "…и заказ падает вам в WhatsApp одной карточкой.",
   "Без сайтов и приложений. TakeStart — открыл ссылку, принял заказ."
@@ -152,7 +294,11 @@ const SUBS = [
 const scenes = [...document.querySelectorAll('.scene')];
 const sub = document.getElementById('sub'), bar = document.getElementById('bar'),
       clock = document.getElementById('clock'), voBox = document.getElementById('vo');
-SUBS.forEach((t,i)=>{ const d=document.createElement('div'); d.className='vo-line'; d.id='vo'+i; const b=document.createElement('b'); b.textContent=SCENES[i][0]+'–'+SCENES[i][1]+' сек'; d.appendChild(b); d.appendChild(document.createTextNode(t)); voBox.appendChild(d); });
+SUBS.forEach((t,i)=>{
+  const d=document.createElement('div'); d.className='vo-line'; d.id='vo'+i;
+  const b=document.createElement('b'); b.textContent=fmtSec(SCENES[i][0])+'–'+fmtSec(SCENES[i][1])+' сек';
+  d.appendChild(b); d.appendChild(document.createTextNode(t)); voBox.appendChild(d);
+});
 let raf=null, t0=null;
 function show(i){
   scenes.forEach((s,k)=>s.classList.toggle('on', k===i));
@@ -167,14 +313,20 @@ function tick(now){
   clock.textContent=t.toFixed(1)+' / 20 сек · 9:16 · 405×720';
   let cur=SCENES.findIndex(([a,b])=>t>=a&&t<b); if(cur<0) cur=4;
   show(cur);
-  // тикающий таймер сцены 2
-  if(cur===1){ const el=document.getElementById('timer'); const s=Math.max(0, 452-(t-3)*8); const m=String(Math.floor(s/60)).padStart(2,'0'), ss=String(Math.floor(s%60)).padStart(2,'0'); if(el) el.textContent=m+':'+ss; }
+  if(cur===1){
+    const el=document.getElementById('timer');
+    const s=Math.max(0, 452-(t-4)*8);
+    const m=String(Math.floor(s/60)).padStart(2,'0'), ss=String(Math.floor(s%60)).padStart(2,'0');
+    if(el) el.textContent=m+':'+ss;
+  }
   raf=requestAnimationFrame(tick);
 }
-function finish(){ cancelAnimationFrame(raf); raf=null; bar.style.width='100%'; clock.textContent='20.0 / 20 сек · готово ✅ пиши дубль!'; }
+function finish(){ cancelAnimationFrame(raf); raf=null; bar.style.width='100%'; clock.textContent='20.0 / 20 сек · готово ✅'; }
 document.getElementById('play').onclick=()=>{ if(raf) return; t0=null; raf=requestAnimationFrame(tick); };
 document.getElementById('replay').onclick=()=>{ cancelAnimationFrame(raf); raf=null; t0=null; bar.style.width='0%'; show(0); sub.textContent='Нажми «Играть»…'; clock.textContent='0.0 / 20 сек · 9:16 · 405×720'; };
 show(0);
+if(/[?&]clean/.test(location.search)){ document.body.classList.add('clean'); t0=null; raf=requestAnimationFrame(tick); }
+else { document.getElementById('cleanLink').href = location.pathname + '?clean=1'; }
 </script>
 </body>
 </html>
