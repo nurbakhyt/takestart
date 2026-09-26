@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TakeStart — промо 20 сек (аниматик)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#1a1a1a; font-family:-apple-system,'Segoe UI',Roboto,sans-serif; display:flex; gap:32px; justify-content:center; align-items:flex-start; min-height:100vh; padding:24px; color:#fff; }
+  .side { max-width:300px; padding-top:12px; }
+  .side h1 { font-size:20px; margin-bottom:8px; }
+  .side p { font-size:13px; line-height:1.6; opacity:.7; margin-bottom:12px; }
+  .side kbd { background:#333; border-radius:4px; padding:1px 6px; font-size:12px; }
+  .side button { background:#FF6B2C; border:none; color:#fff; font-size:15px; font-weight:700; padding:12px 24px; border-radius:12px; cursor:pointer; margin:4px 8px 4px 0; }
+  .side button.ghost { background:#333; }
+  .vo-line { font-size:13px; background:#262626; border-left:3px solid #FF6B2C; padding:8px 10px; border-radius:0 8px 8px 0; margin-bottom:8px; opacity:.45; transition:opacity .3s; }
+  .vo-line.active { opacity:1; }
+  .vo-line b { color:#FF6B2C; font-size:11px; display:block; margin-bottom:2px; }
+  /* STAGE 9:16 */
+  .stage-wrap { display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .stage { width:405px; height:720px; border-radius:28px; overflow:hidden; position:relative; background:#FFF8F0; box-shadow:0 20px 80px rgba(0,0,0,.6); }
+  .progress { position:absolute; top:0; left:0; height:4px; background:#FF6B2C; width:0%; z-index:50; }
+  .time { font-size:12px; opacity:.6; font-variant-numeric:tabular-nums; }
+  .scene { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 30px; opacity:0; transform:scale(1.04); transition:opacity .45s, transform .45s; pointer-events:none; }
+  .scene.on { opacity:1; transform:scale(1); pointer-events:auto; }
+  .badge { font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:#C24A0E; background:#FFE9DC; padding:6px 14px; border-radius:99px; margin-bottom:14px; }
+  .title { font-size:30px; font-weight:800; color:#1a1a1a; text-align:center; line-height:1.15; margin-bottom:18px; }
+  .title span { color:#D14E0E; }
+  /* phone */
+  .phone { width:200px; height:400px; background:#111; border-radius:30px; padding:10px; box-shadow:0 12px 40px rgba(0,0,0,.25); position:relative; }
+  .screen { background:#ECE5DD; border-radius:20px; height:100%; overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  .wa-head { background:#075E54; color:#fff; font-size:12px; font-weight:700; padding:10px 12px; }
+  .chat { padding:10px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .msg { max-width:85%; font-size:11px; padding:7px 9px; border-radius:8px; line-height:1.35; color:#1a1a1a; }
+  .msg.in { background:#fff; align-self:flex-start; }
+  .msg.out { background:#DCF8C6; align-self:flex-end; }
+  .msg.check { background:#fff; align-self:flex-start; border:1.5px solid #25D366; }
+  .msg.check b { display:block; font-size:11px; margin-bottom:2px; }
+  .msg.check .sum { color:#128C4B; font-weight:800; margin-top:4px; }
+  .chaos { animation:shake .5s infinite; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-3px) rotate(-1deg)} 75%{transform:translateX(3px) rotate(1deg)} }
+  .shop-card { background:#fff; border-radius:12px; padding:10px; margin:6px 10px; font-size:11px; color:#1a1a1a; box-shadow:0 2px 8px rgba(0,0,0,.08); display:flex; justify-content:space-between; align-items:center; }
+  .shop-card .add { background:#25D366; color:#fff; border-radius:8px; padding:4px 10px; font-weight:800; }
+  .cart-bar { background:#1a1a1a; color:#fff; font-size:12px; font-weight:700; margin:0 10px 10px; border-radius:12px; padding:10px; text-align:center; }
+  .timer-chip { position:absolute; top:12px; right:12px; background:#1a1a1a; color:#fff; font-size:13px; font-weight:800; border-radius:99px; padding:6px 12px; font-variant-numeric:tabular-nums; }
+  .qr { width:170px; background:#fff; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; border:3px dashed #FF6B2C; margin:6px 0 14px; padding:12px; }
+  .qr img { width:130px; height:130px; display:block; }
+  .qr small { font-size:11px; font-weight:700; color:#1a1a1a; }
+  .logo { font-size:38px; font-weight:900; color:#1a1a1a; }
+  .logo span { color:#FF6B2C; }
+  .sub { max-width:300px; min-height:44px; text-align:center; font-size:14px; color:#fff; background:rgba(0,0,0,.75); border-radius:12px; padding:10px 14px; line-height:1.4; }
+  .sub-wrap { position:absolute; bottom:18px; left:18px; right:18px; display:flex; justify-content:center; z-index:40; }
+  .pop { animation:pop .5s cubic-bezier(.2,1.6,.4,1) both; }
+  @keyframes pop { from{transform:scale(.6); opacity:0} to{transform:scale(1); opacity:1} }
+  .rise { animation:rise .5s ease both; }
+  @keyframes rise { from{transform:translateY(16px); opacity:0} to{transform:none; opacity:1} }
+  .d1{animation-delay:.15s}.d2{animation-delay:.35s}.d3{animation-delay:.6s}.d4{animation-delay:.9s}.d5{animation-delay:1.2s}
+  .ping { animation:ping 1s ease infinite; }
+  @keyframes ping { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+  @media (max-width:900px){ body{flex-direction:column; align-items:center} .side{max-width:405px} }
+</style>
+</head>
+<body>
+<div class="side">
+  <h1>TakeStart · аниматик 20 сек</h1>
+  <p>Нажми <kbd>▶ Играть</kbd> и пиши экран (OBS / QuickTime). Вертикаль 405×720 — готово под Reels / TikTok. Озвучку наложишь поверх, субтитры уже в тайминге.</p>
+  <button id="play">▶ Играть 20 сек</button><button id="replay" class="ghost">↺ Сначала</button>
+  <p style="margin-top:14px">Текст диктора подсвечивается по ходу:</p>
+  <div id="vo"></div>
+</div>
+<div class="stage-wrap">
+  <div class="stage" id="stage">
+    <div class="progress" id="bar"></div>
+    <!-- 1 -->
+    <div class="scene" data-scene="0">
+      <div class="badge">0–3 сек · боль</div>
+      <div class="title">Заказы теряются <span>в личке?</span></div>
+      <div class="phone"><div class="screen chaos">
+        <div class="wa-head">💬 Клиенты · 47 непрочитанных</div>
+        <div class="chat">
+          <div class="msg in">а это с собой??</div>
+          <div class="msg in">а цену скиньте…</div>
+          <div class="msg in">я вчера заказывала, где мой?? 😡</div>
+          <div class="msg out">секунду, ищу ваш заказ…</div>
+          <div class="msg in">алооо??</div>
+        </div>
+      </div></div>
+    </div>
+    <!-- 2 -->
+    <div class="scene" data-scene="1">
+      <div class="badge">3–6 сек · решение</div>
+      <div class="title">Витрина <span>за 10 минут</span></div>
+      <div class="phone"><div class="screen">
+        <div class="wa-head" style="background:#FF6B2C">🧡 TakeStart · мой магазин</div>
+        <div class="timer-chip" id="timer">07:32</div>
+        <div class="chat">
+          <div class="shop-card pop">☕ Капучино — 890 ₸ <span class="add">✓</span></div>
+          <div class="shop-card pop d2">🍰 Чизкейк — 1 200 ₸ <span class="add">✓</span></div>
+          <div class="shop-card pop d4">🥐 Круассан — 650 ₸ <span class="add">+</span></div>
+        </div>
+      </div></div>
+    </div>
+    <!-- 3 -->
+    <div class="scene" data-scene="2">
+      <div class="badge">6–10 сек · покупатель</div>
+      <div class="title">Ссылка или QR — <span>и всё</span></div>
+      <div class="phone"><div class="screen">
+        <div class="wa-head" style="background:#1a1a1a">🔗 takestart.kz/s/dami</div>
+        <div class="chat">
+          <div class="shop-card rise">☕ Капучино ×2 <span class="add">− 2 +</span></div>
+          <div class="shop-card rise d2">🍰 Чизкейк ×1 <span class="add">− 1 +</span></div>
+        </div>
+        <div class="cart-bar pop d4 ping">🛒 Корзина · 2 980 ₸ →</div>
+      </div></div>
+    </div>
+    <!-- 4 -->
+    <div class="scene" data-scene="3">
+      <div class="badge">10–15 сек · магия чека</div>
+      <div class="title">Заказ — <span>одной карточкой</span> в WhatsApp</div>
+      <div class="phone"><div class="screen">
+        <div class="wa-head">💬 Мой магазин · WhatsApp</div>
+        <div class="chat">
+          <div class="msg check pop">🧾 <b>Новый заказ #128</b>☕ Капучино ×2 — 1 780 ₸<br>🍰 Чизкейк ×1 — 1 200 ₸<br>📍 Абая 44, кв 12<br>📞 +7 701 234-56-78<div class="sum">Итого: 2 980 ₸</div></div>
+          <div class="msg out pop d3">Приняли! Будет готово через 15 минут ✅</div>
+        </div>
+      </div></div>
+    </div>
+    <!-- 5 -->
+    <div class="scene" data-scene="4">
+      <div class="badge">15–20 сек · финал</div>
+      <div class="logo">Take<span>Start</span> 🧡</div>
+      <div class="qr"><img src="qr.svg" alt="QR — takestart.kz"><small>takestart.kz</small></div>
+      <div class="title" style="font-size:22px">Открыл ссылку —<br><span>принял заказ</span></div>
+      <div style="font-size:13px;color:#555;font-weight:600">Без сайтов и приложений</div>
+    </div>
+    <div class="sub-wrap"><div class="sub" id="sub">Нажми «Играть»…</div></div>
+  </div>
+  <div class="time" id="clock">0.0 / 20 сек · 9:16 · 405×720</div>
+</div>
+<script>
+const TOTAL = 20;
+const SCENES = [ // [start, end]
+  [0,3],[3,6],[6,10],[10,15],[15,20]
+];
+const SUBS = [
+  "У вас вкусно. А заказы теряются в личке?",
+  "TakeStart — витрина для бизнеса за 10 минут.",
+  "Кидаете ссылку или QR — покупатель собирает корзину…",
+  "…и заказ падает вам в WhatsApp одной карточкой.",
+  "Без сайтов и приложений. TakeStart — открыл ссылку, принял заказ."
+];
+const scenes = [...document.querySelectorAll('.scene')];
+const sub = document.getElementById('sub'), bar = document.getElementById('bar'),
+      clock = document.getElementById('clock'), voBox = document.getElementById('vo');
+SUBS.forEach((t,i)=>{ const d=document.createElement('div'); d.className='vo-line'; d.id='vo'+i; const b=document.createElement('b'); b.textContent=SCENES[i][0]+'–'+SCENES[i][1]+' сек'; d.appendChild(b); d.appendChild(document.createTextNode(t)); voBox.appendChild(d); });
+let raf=null, t0=null;
+function show(i){
+  scenes.forEach((s,k)=>s.classList.toggle('on', k===i));
+  sub.textContent = SUBS[i];
+  SUBS.forEach((_,k)=>document.getElementById('vo'+k).classList.toggle('active', k===i));
+}
+function tick(now){
+  if(!t0) t0=now;
+  const t=(now-t0)/1000;
+  if(t>=TOTAL){ finish(); return; }
+  bar.style.width=(t/TOTAL*100)+'%';
+  clock.textContent=t.toFixed(1)+' / 20 сек · 9:16 · 405×720';
+  let cur=SCENES.findIndex(([a,b])=>t>=a&&t<b); if(cur<0) cur=4;
+  show(cur);
+  // тикающий таймер сцены 2
+  if(cur===1){ const el=document.getElementById('timer'); const s=Math.max(0, 452-(t-3)*8); const m=String(Math.floor(s/60)).padStart(2,'0'), ss=String(Math.floor(s%60)).padStart(2,'0'); if(el) el.textContent=m+':'+ss; }
+  raf=requestAnimationFrame(tick);
+}
+function finish(){ cancelAnimationFrame(raf); raf=null; bar.style.width='100%'; clock.textContent='20.0 / 20 сек · готово ✅ пиши дубль!'; }
+document.getElementById('play').onclick=()=>{ if(raf) return; t0=null; raf=requestAnimationFrame(tick); };
+document.getElementById('replay').onclick=()=>{ cancelAnimationFrame(raf); raf=null; t0=null; bar.style.width='0%'; show(0); sub.textContent='Нажми «Играть»…'; clock.textContent='0.0 / 20 сек · 9:16 · 405×720'; };
+show(0);
+</script>
+</body>
+</html>
