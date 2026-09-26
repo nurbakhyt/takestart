@@ -12,4 +12,6 @@ The skills speak in terms of five canonical triage roles. This file maps those r
 
 When a skill mentions a role (e.g. "apply the AFK-ready triage label"), use the corresponding label string from this table.
 
+All five labels exist in the tracker (`gh label list`). They are **states of the triage pipeline**, and they sit alongside GitHub's default labels (`bug`, `enhancement`, `documentation`, …), which describe **what kind of thing** the issue is. An issue can carry both: `enhancement` + `needs-triage` while it waits, `enhancement` + `ready-for-agent` once it is specified. A role label moves forward (`needs-triage` → `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`); a default label stays.
+
 Edit the right-hand column to match whatever vocabulary you actually use.

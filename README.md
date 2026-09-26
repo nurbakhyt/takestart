@@ -61,18 +61,30 @@ Preview идёт через `opennextjs-cloudflare upload` (скрипт `upload
 
 ## Структура
 
-```text                    # Next.js витрина + кабинет продавца
+```text
+promo/                      # автономный промо-ролик 20 сек: один HTML + QR, вне сборки
+
+apps/web/                   # Next.js витрина + кабинет продавца
   app/[locale]/s/[slug]/     # витрина, checkout, success
   app/[locale]/dashboard/    # кабинет: магазины, товары, категории, заказы
+  app/[locale]/login/        # вход продавца
   app/api/orders             # создание заказа + wa.me-ссылка
-  app/api/images             # отдача фото из R2
-  db/                        # drizzle-схема, миграции, seed.sql
-  lib/                       # whatsapp-чек, D1-клиент, R2-хелперы
-  messages/                  # ru/kk/en
+  app/api/images/[...key]    # отдача фото из R2
+  app/api/dashboard/photos   # загрузка и удаление фото в R2
+  app/api/dashboard/translate # прокси к apps/ai через service binding AI_SERVICE
+  app/api/auth/[...nextauth] # колбэки Auth.js
+  auth.ts                   # конфиг NextAuth: ленивый колбэк, биндинги в рантайме
+  components/               # storefront/, dashboard/, landing/
+  db/                       # drizzle-схема, миграции, seed.sql
+  i18n/                     # локали ru/kk/en, routing и request
+  lib/                      # whatsapp-чек, locale-text, R2-хелперы, выборки витрины/кабинета
+  messages/                 # ru/kk/en
+  wrangler.toml             # биндинги D1/R2/AI_SERVICE
 
 apps/ai/                     # Cloudflare Workers AI: перевод названий ru/kk/en
   src/index.ts               # воркер: POST /translate
   src/prompt.ts              # сборка промпта под пару языков
   src/parse.ts               # терпимый разбор ответа модели
-  src/translate.ts           # вызов модели, повтор при срывe формы
+  src/translate.ts           # вызов модели, повтор при срыве формы
+  test/                      # vitest: prompt, parse, контракт, translate
 ```
