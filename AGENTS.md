@@ -6,6 +6,9 @@
 
 ## Прод
 
+- **Прод-домен — `https://takestart.cc`**, обслуживает воркер `takestart` на
+  Cloudflare (`workers.dev` выключен, кастомный домен в `wrangler.toml`).
+  Ссылка на прод в текстах, QR и аниматиках — только `takestart.cc`.
 - **Мерж в `main` выкатывает воркер `takestart` сам** (Cloudflare Workers Builds,
   root `apps/web`). Поэтому гейт перед оформлением пул-реквеста — локальный:
   `pnpm typecheck && pnpm lint && pnpm build`; CI в репозитории нет.
