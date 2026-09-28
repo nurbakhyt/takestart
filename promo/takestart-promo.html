@@ -42,7 +42,7 @@
   .scene.on{opacity:1;transform:scale(1);pointer-events:auto}
   .badge{font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);padding:5px 12px;border-radius:6px;margin-bottom:14px}
   .title{font-family:var(--font-display);font-weight:600;font-size:26px;line-height:1.18;color:var(--ink);text-align:center;letter-spacing:-.02em;margin-bottom:16px}
-  .title span{color:var(--tandoor)}
+  .title .hl{color:var(--tandoor)}
   .note{font-size:13px;color:var(--ink-soft);text-align:center;margin-top:12px;line-height:1.5}
 
   /* Чековая лента: бумага с боковыми линейками */
@@ -149,7 +149,7 @@
 <div class="side">
   <h1>TakeStart · аниматик 20 сек</h1>
   <p>Открой <kbd>?clean=1</kbd> и пиши экран (OBS / QuickTime <kbd>Cmd+Shift+5</kbd>) — ролик поедет сам. Интерфейсы TakeStart повторяют реальный дизайн (чековая лента), WhatsApp — настоящий.</p>
-  <button id="play">▶ Играть 20 сек</button><button id="replay" class="ghost">↺ Сначала</button><a id="cleanLink" class="side-link" href="?clean=1" target="_blank">🎬 Чистый режим для записи</a>
+  <button id="play">▶ Играть 20 сек</button><button id="replay" class="ghost">↺ Сначала</button><button id="langBtn" class="ghost">🇰🇿 Қазақша</button><a id="cleanLink" class="side-link" href="?clean=1" target="_blank">🎬 Чистый режим для записи</a>
   <p style="margin-top:14px">Текст диктора по ходу:</p>
   <div id="vo"></div>
 </div>
@@ -159,30 +159,30 @@
 
     <!-- 1 · Боль: WhatsApp продавца забит личными вопросами -->
     <div class="scene" data-scene="0">
-      <div class="badge">0–4 сек · боль</div>
-      <div class="title">Заказы теряются <span>в личке</span></div>
+      <div class="badge" data-kz="0–4 с · мәселе">0–4 сек · боль</div>
+      <div class="title"><span data-kz="Тапсырыс">Заказы теряются</span> <span class="hl" data-kz="личкада жоғалады?">в личке</span></div>
       <div class="phone"><div class="scr">
         <div class="status"><span>21:47</span><span>●●● ▮</span></div>
         <div class="wa-head">
           <div class="wa-ava">DF</div>
-          <div><div class="wa-name">Dala Food</div><div class="wa-on">в сети</div></div>
+          <div><div class="wa-name">Dala Food</div><div class="wa-on" data-kz="онлайн">в сети</div></div>
           <div class="wa-ic"><span>⌕</span><span>☎</span></div>
         </div>
         <div class="chat chaos">
-          <div class="bub in">Сколько стоит лагман? <span class="t">21:41 ✓✓</span></div>
-          <div class="bub in">А с собой можно? <span class="t">21:42 ✓</span></div>
-          <div class="bub out">Добрый! Лагман 1 200 ₸, с собой можно <span class="t">21:43 <span class="ticks">✓✓</span></span></div>
-          <div class="bub in">Кстати, а где мой заказ, вчера ждал( <span class="t">21:44 ✓</span></div>
-          <div class="bub in">Алоо, вы вообще на связи? <span class="t">21:46 ✓</span></div>
+          <div class="bub in"><span data-kz="Лағман қанша тұрады?">Сколько стоит лагман?</span> <span class="t">21:41 ✓✓</span></div>
+          <div class="bub in"><span data-kz="Өзімен алып кете аламын ба?">А с собой можно?</span> <span class="t">21:42 ✓</span></div>
+          <div class="bub out"><span data-kz="Сәлем! Лағман 1 200 ₸, алып кетуге болады">Добрый! Лагман 1 200 ₸, с собой можно</span> <span class="t">21:43 <span class="ticks">✓✓</span></span></div>
+          <div class="bub in"><span data-kz="А, менің тапсырысым қайда, кеше күттім едім(">Кстати, а где мой заказ, вчера ждал(</span> <span class="t">21:44 ✓</span></div>
+          <div class="bub in"><span data-kz="Алло, сіздер тыңдамайсыздар ма?">Алоо, вы вообще на связи?</span> <span class="t">21:46 ✓</span></div>
         </div>
-        <div class="composer"><div class="inp">Сообщение</div></div>
+        <div class="composer"><div class="inp" data-kz="Хабарлама">Сообщение</div></div>
       </div></div>
     </div>
 
     <!-- 2 · Решение: кабинет, товары за 10 минут -->
     <div class="scene" data-scene="1">
-      <div class="badge">4–7,5 сек · решение</div>
-      <div class="title">Витрина <span>за 10 минут</span></div>
+      <div class="badge" data-kz="4–7,5 с · шешім">4–7,5 сек · решение</div>
+      <div class="title"><span data-kz="Витрина">Витрина</span> <span class="hl" data-kz="10 минут ішінде">за 10 минут</span></div>
       <div class="timer" id="timer">07:32</div>
       <div class="tape" style="max-width:300px">
         <div class="dash-head">
@@ -191,52 +191,52 @@
         </div>
         <div class="dash-hero">
           <div class="ava">DF</div>
-          <div><div class="nm">Dala Food</div><div class="sl">takestart.cc/ru/s/dala-food</div></div>
+          <div><div class="nm">Dala Food</div><div class="sl" data-kz="takestart.cc/kk/s/dala-food">takestart.cc/ru/s/dala-food</div></div>
         </div>
-        <div class="toast"><i>✓</i> Товар «Сорпа» добавлен</div>
-        <div class="btn-ink">+ Новый товар</div>
-        <div class="dash-row"><div class="nm">Лагман<br><span class="pr">1 200 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
-        <div class="dash-row"><div class="nm">Плов<br><span class="pr">1 100 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
-        <div class="dash-row rise d2"><div class="nm">Сорпа<br><span class="pr">700 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
-        <div class="dash-row"><div class="nm">Бешбармак, <span class="stopped">остановлен</span><br><span class="pr">1 500 ₸</span></div><span class="dbtn">Изменить</span><span class="dbtn del">Удалить</span></div>
+        <div class="toast"><i>✓</i><span data-kz="«Сорпа» тауары қосылды">Товар «Сорпа» добавлен</span></div>
+        <div class="btn-ink" data-kz="+ Жаңа тауар">+ Новый товар</div>
+        <div class="dash-row"><div class="nm"><span data-kz="Лағман">Лагман</span><br><span class="pr">1 200 ₸</span></div><span class="dbtn" data-kz="Өзгерту">Изменить</span><span class="dbtn del" data-kz="Жою">Удалить</span></div>
+        <div class="dash-row"><div class="nm"><span data-kz="Палау">Плов</span><br><span class="pr">1 100 ₸</span></div><span class="dbtn" data-kz="Өзгерту">Изменить</span><span class="dbtn del" data-kz="Жою">Удалить</span></div>
+        <div class="dash-row rise d2"><div class="nm"><span data-kz="Сорпа">Сорпа</span><br><span class="pr">700 ₸</span></div><span class="dbtn" data-kz="Өзгерту">Изменить</span><span class="dbtn del" data-kz="Жою">Удалить</span></div>
+        <div class="dash-row"><div class="nm"><span data-kz="Бешбармақ">Бешбармак</span>, <span class="stopped" data-kz="стоп">остановлен</span><br><span class="pr">1 500 ₸</span></div><span class="dbtn" data-kz="Өзгерту">Изменить</span><span class="dbtn del" data-kz="Жою">Удалить</span></div>
       </div>
     </div>
 
     <!-- 3 · Покупатель: витрина и корзина -->
     <div class="scene" data-scene="2">
-      <div class="badge">7,5–11 сек · покупатель</div>
-      <div class="title">Ссылка или QR — <span>и всё</span></div>
+      <div class="badge" data-kz="7,5–11 с · сатып алушы">7,5–11 сек · покупатель</div>
+      <div class="title"><span data-kz="Сілтеме немесе QR —">Ссылка или QR —</span> <span class="hl" data-kz="бәрі осы">и всё</span></div>
       <div class="tape zig-top" style="max-width:300px">
         <div class="shop-head">
           <div class="shop-name">Dala Food</div>
-          <div class="shop-meta">Алматы, ул. Абая 10, доставка и самовывоз, 500 ₸</div>
+          <div class="shop-meta" data-kz="Алматы, Абай көш. 10, жеткізу және өзі алып кету, 500 ₸">Алматы, ул. Абая 10, доставка и самовывоз, 500 ₸</div>
         </div>
-        <div class="tabs"><span class="tab">Супы</span><span class="tab on">Горячее</span><span class="tab">Напитки</span></div>
+        <div class="tabs"><span class="tab" data-kz="Сорпалар">Супы</span><span class="tab on" data-kz="Ыстық тағамдар">Горячее</span><span class="tab" data-kz="Сусындар">Напитки</span></div>
         <div class="row">
-          <div><div class="nm">Лагман</div><div class="ds">Домашняя лапша, говядина, овощи</div></div>
+          <div><div class="nm" data-kz="Лағман">Лагман</div><div class="ds" data-kz="Үй кеспесі, сиыр еті, көкөністер">Домашняя лапша, говядина, овощи</div></div>
           <div class="qty"><span class="qbtn">−</span><span class="qnum">2</span><span class="qbtn add">+</span></div>
         </div>
         <div class="row" style="border-bottom:0;padding-top:9px;padding-bottom:9px">
-          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px">Лагман ×2</span><span class="leader"></span><span class="pr">2 400 ₸</span>
+          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px" data-kz="Лағман ×2">Лагман ×2</span><span class="leader"></span><span class="pr">2 400 ₸</span>
         </div>
         <div class="row">
-          <div><div class="nm">Чай с молоком</div><div class="ds">Чайник 0.8 л</div></div>
+          <div><div class="nm" data-kz="Сүтті шәй">Чай с молоком</div><div class="ds" data-kz="Шәйнек 0.8 л">Чайник 0.8 л</div></div>
           <div class="qty"><span class="qbtn">−</span><span class="qnum">1</span><span class="qbtn add">+</span></div>
         </div>
         <div class="row" style="border-bottom:0;padding-top:9px;padding-bottom:9px">
-          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px">Чай с молоком ×1</span><span class="leader"></span><span class="pr">500 ₸</span>
+          <span class="nm" style="font-weight:400;color:var(--ink-soft);font-size:13px" data-kz="Сүтті шәй ×1">Чай с молоком ×1</span><span class="leader"></span><span class="pr">500 ₸</span>
         </div>
-        <div class="row off"><div class="nm">Бешбармак, <span style="color:var(--tandoor)">остановлен</span><br><span class="ds">Конина, казы, тесто, лук</span></div></div>
-        <div class="bar-ink pop d4 ping"><span class="t">Корзина, 3 позиции</span><span class="s">2 900 ₸</span></div>
-        <div class="btn-leaf pop d5">Заказать в WhatsApp</div>
-        <div class="link">takestart.cc/ru/s/dala-food</div>
+        <div class="row off"><div class="nm"><span data-kz="Бешбармақ">Бешбармак</span>, <span style="color:var(--tandoor)" data-kz="стоп">остановлен</span><br><span class="ds" data-kz="Жылқы еті, қазы, қамыр, пияз">Конина, казы, тесто, лук</span></div></div>
+        <div class="bar-ink pop d4 ping"><span class="t" data-kz="Себет, 3 позиция">Корзина, 3 позиции</span><span class="s">2 900 ₸</span></div>
+        <div class="btn-leaf pop d5" data-kz="WhatsApp арқылы тапсырыс беру">Заказать в WhatsApp</div>
+        <div class="link" data-kz="takestart.cc/kk/s/dala-food">takestart.cc/ru/s/dala-food</div>
       </div>
     </div>
 
     <!-- 4 · Заказ приходит продавцу одной карточкой -->
     <div class="scene" data-scene="3">
-      <div class="badge">11–15 сек · заказ</div>
-      <div class="title">Чек <span>одной карточкой</span> в WhatsApp</div>
+      <div class="badge" data-kz="11–15 с · тапсырыс">11–15 сек · заказ</div>
+      <div class="title"><span data-kz="Чек">Чек</span> <span class="hl" data-kz="бір карточкамен">одной карточкой</span> <span data-kz="WhatsApp-та">в WhatsApp</span></div>
       <div class="phone"><div class="scr">
         <div class="status"><span>21:52</span><span>●●● ▮</span></div>
         <div class="wa-head">
@@ -245,32 +245,32 @@
           <div class="wa-ic"><span>⌕</span><span>☎</span></div>
         </div>
         <div class="chat">
-          <div class="day">Сегодня</div>
-          <div class="bub out rcpt pop"><b>🧾 Заказ DAL-260927-0042</b>
+          <div class="day" data-kz="Бүгін">Сегодня</div>
+          <div class="bub out rcpt pop"><b data-kz="🧾 Тапсырыс DAL-260927-0042">🧾 Заказ DAL-260927-0042</b>
 Dala Food
-— Лагман ×2 — 2 400 ₸
-— Чай с молоком ×1 — 500 ₸
-📦 Доставка: 500 ₸
-<b>Итого: <span class="stamp">3 400 ₸</span></b>
-Имя: Айгерим
+<span data-kz="— Лағман ×2 — 2 400 ₸">— Лагман ×2 — 2 400 ₸</span>
+<span data-kz="— Сүтті шәй ×1 — 500 ₸">— Чай с молоком ×1 — 500 ₸</span>
+<span data-kz="📦 Жеткізу: 500 ₸">📦 Доставка: 500 ₸</span>
+<b><span data-kz="Барлығы:">Итого:</span> <span class="stamp">3 400 ₸</span></b>
+<span data-kz="Аты: Айгерим">Имя: Айгерим</span>
 Тел: +77012345678
-Адрес: Алматы, Жандосова 14, кв 8<span class="t">21:52 <span class="ticks">✓✓</span></span></div>
-          <div class="bub out pop d3">Приняли! Будет через 15 минут <span class="t">21:52 <span class="ticks">✓✓</span></span></div>
+<span data-kz="Мекенжай: Алматы, Жандосова 14, пәтер 8">Адрес: Алматы, Жандосова 14, кв 8</span><span class="t">21:52 <span class="ticks">✓✓</span></span></div>
+          <div class="bub out pop d3"><span data-kz="Қабылдадық! 15 минуттан кейін дайын болады">Приняли! Будет через 15 минут</span> <span class="t">21:52 <span class="ticks">✓✓</span></span></div>
           <div class="typing"><i></i><i></i><i></i></div>
         </div>
-        <div class="composer"><div class="inp">Сообщение</div></div>
+        <div class="composer"><div class="inp" data-kz="Хабарлама">Сообщение</div></div>
       </div></div>
     </div>
 
     <!-- 5 · Финал -->
     <div class="scene" data-scene="4">
-      <div class="badge">15–20 сек · финал</div>
+      <div class="badge" data-kz="15–20 с · финал">15–20 сек · финал</div>
       <div class="tape zig-top zig-bot" style="max-width:250px;background:var(--paper)">
         <div style="padding:26px 20px;text-align:center">
           <div class="logo">TakeStart</div>
           <div class="qr"><img src="qr.svg" alt="QR — takestart.cc"><small>takestart.cc</small></div>
-          <div style="font-family:var(--font-display);font-size:16px;font-weight:600;line-height:1.25;color:var(--ink)">Открыл ссылку —<br><span style="color:var(--leaf)">принял заказ</span></div>
-          <div style="font-size:12px;color:var(--ink-faint);margin-top:9px">без сайтов и приложений</div>
+          <div style="font-family:var(--font-display);font-size:16px;font-weight:600;line-height:1.25;color:var(--ink)"><span data-kz="Сілтемені аштыңыз —">Открыл ссылку —</span><br><span data-kz="тапсырыс қабылданды" style="color:var(--leaf)">принял заказ</span></div>
+          <div style="font-size:12px;color:var(--ink-faint);margin-top:9px" data-kz="сайт пен қолданба керек емес">без сайтов и приложений</div>
         </div>
       </div>
     </div>
@@ -284,26 +284,49 @@ const TOTAL = 20;
 const SCENES = [[0,4],[4,7.5],[7.5,11],[11,15],[15,20]];
 // 4,0 · 3,5 · 3,5 · 4,0 · 5,0 сек — под темп тёплой озвучки (~2,2 слова/сек)
 const fmtSec = (n) => String(n).replace('.', ',');
-const SUBS = [
-  "У вас вкусно. А заказы теряются в личке?",
-  "TakeStart — витрина для бизнеса за десять минут.",
-  "Кидаете ссылку или QR — покупатель собирает корзину…",
-  "…и заказ падает вам в WhatsApp одной карточкой.",
-  "Без сайтов и приложений. TakeStart — открыл ссылку, принял заказ."
-];
+const SUBS = {
+  ru: [
+    "У вас вкусно. А заказы теряются в личке?",
+    "TakeStart — витрина для бизнеса за десять минут.",
+    "Кидаете ссылку или QR — покупатель собирает корзину…",
+    "…и заказ падает вам в WhatsApp одной карточкой.",
+    "Без сайтов и приложений. TakeStart — открыл ссылку, принял заказ."
+  ],
+  kk: [
+    "Дәміңіз жақсы. Тапсырыстар личкада жоғалып кетеді.",
+    "TakeStart — бизнесіңізге витрина он минут ішінде.",
+    "Сілтеме немесе QR жіберіңіз — сатып алушы себет жинайды…",
+    "…ал тапсырыс WhatsApp-та бір карточкамен келеді.",
+    "Сайт пен қолданба керек емес. TakeStart — сілтемені аштыңыз, тапсырыс қабылданды."
+  ]
+};
+const qs = new URLSearchParams(location.search);
+let lang = qs.get('lang') === 'kk' ? 'kk' : 'ru';
 const scenes = [...document.querySelectorAll('.scene')];
 const sub = document.getElementById('sub'), bar = document.getElementById('bar'),
-      clock = document.getElementById('clock'), voBox = document.getElementById('vo');
-SUBS.forEach((t,i)=>{
-  const d=document.createElement('div'); d.className='vo-line'; d.id='vo'+i;
-  const b=document.createElement('b'); b.textContent=fmtSec(SCENES[i][0])+'–'+fmtSec(SCENES[i][1])+' сек';
-  d.appendChild(b); d.appendChild(document.createTextNode(t)); voBox.appendChild(d);
-});
-let raf=null, t0=null;
+      clock = document.getElementById('clock'), voBox = document.getElementById('vo'),
+      langBtn = document.getElementById('langBtn'), cleanLink = document.getElementById('cleanLink');
+let raf=null, t0=null, cur=0;
+function buildVo(){
+  voBox.replaceChildren();
+  SUBS[lang].forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='vo-line'; d.id='vo'+i;
+    const b=document.createElement('b'); b.textContent=fmtSec(SCENES[i][0])+'–'+fmtSec(SCENES[i][1])+' с';
+    d.appendChild(b); d.appendChild(document.createTextNode(t)); voBox.appendChild(d);
+  });
+}
+function applyLang(){
+  document.querySelectorAll('[data-kz]').forEach(el=>{ if(lang==='kk') el.textContent=el.dataset.kz; });
+  document.documentElement.lang = lang;
+  langBtn.textContent = lang==='kk' ? '🇷🇺 Русский' : '🇰🇿 Қазақша';
+  cleanLink.href = location.pathname + '?clean=1' + (lang==='kk' ? '&lang=kk' : '');
+  buildVo(); show(cur);
+}
 function show(i){
+  cur=i;
   scenes.forEach((s,k)=>s.classList.toggle('on', k===i));
-  sub.textContent = SUBS[i];
-  SUBS.forEach((_,k)=>document.getElementById('vo'+k).classList.toggle('active', k===i));
+  sub.textContent = SUBS[lang][i];
+  SUBS[lang].forEach((_,k)=>{ const v=document.getElementById('vo'+k); if(v) v.classList.toggle('active', k===i); });
 }
 function tick(now){
   if(!t0) t0=now;
@@ -324,9 +347,9 @@ function tick(now){
 function finish(){ cancelAnimationFrame(raf); raf=null; bar.style.width='100%'; clock.textContent='20.0 / 20 сек · готово ✅'; }
 document.getElementById('play').onclick=()=>{ if(raf) return; t0=null; raf=requestAnimationFrame(tick); };
 document.getElementById('replay').onclick=()=>{ cancelAnimationFrame(raf); raf=null; t0=null; bar.style.width='0%'; show(0); sub.textContent='Нажми «Играть»…'; clock.textContent='0.0 / 20 сек · 9:16 · 405×720'; };
-show(0);
-if(/[?&]clean/.test(location.search)){ document.body.classList.add('clean'); t0=null; raf=requestAnimationFrame(tick); }
-else { document.getElementById('cleanLink').href = location.pathname + '?clean=1'; }
+langBtn.onclick=()=>{ lang = lang==='kk' ? 'ru' : 'kk'; applyLang(); };
+applyLang();
+if(qs.has('clean')){ document.body.classList.add('clean'); t0=null; raf=requestAnimationFrame(tick); }
 </script>
 </body>
 </html>
