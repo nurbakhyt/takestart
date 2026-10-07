@@ -89,7 +89,10 @@ export const products = sqliteTable(
 /**
  * Order: снапшот Cart, созданный в статусе new в момент нажатия
  * «Заказать в WhatsApp» (см. ADR-0002). itemsJson: [{productId, name, qty, priceTiyin}].
- * status: new | accepted | done | cancelled.
+ * status: new | paid | accepted | done | cancelled.
+ * paid встаёт между new и accepted (оплачен, продавец ещё не подтвердил);
+ * кабинет показывает paid вместе с new в очереди на исполнение.
+ * done/cancelled — терминальные, переходов из них нет.
  */
 export const orders = sqliteTable(
   "orders",
@@ -110,6 +113,44 @@ export const orders = sqliteTable(
     createdAt: createdAt(),
   },
   (t) => [index("orders_shop_idx").on(t.shopId, t.createdAt)],
+);
+
+/**
+ * Payment: попытка приёма денег за Order через Kaspi (см. ADR-0005).
+ * Один Order → N Payment (каждая попытка — новая строка, актуальная —
+ * последняя по createdAt). Секретов сессий Kaspi здесь нет — только связки
+ * и статусы; tokenSN/vtokenSecret живут только на VPS.
+ * provider: kaspi-qr | kaspi-invoice.
+ * status: pending | success | failed | expired | lost.
+ * Терминальные (success/failed/expired/lost) иммутабельны: первое терминальное
+ * фиксируется, поздние вебхуки игнорируются (меняет только ручная сверка).
+ * Суммы: amountTiyin — ожидание из Order, kaspiAmountKzt — факт из Kaspi
+ * (целые тенге; в Kaspi уходит floor(totalTiyin/100)).
+ */
+export const payments = sqliteTable(
+  "payments",
+  {
+    id: id(),
+    shopId: text("shop_id")
+      .notNull()
+      .references(() => shops.id, { onDelete: "cascade" }),
+    orderId: text("order_id")
+      .notNull()
+      .references(() => orders.id, { onDelete: "cascade" }),
+    provider: text("provider").notNull(),
+    /** QrOperationId (QR) или operationId (счёт) из Kaspi API */
+    kaspiPaymentId: text("kaspi_payment_id").notNull(),
+    amountTiyin: integer("amount_tiyin").notNull(),
+    kaspiAmountKzt: integer("kaspi_amount_kzt").notNull(),
+    status: text("status").notNull().default("pending"),
+    createdAt: createdAt(),
+    updatedAt: integer("updated_at").notNull().$defaultFn(() => Date.now()),
+  },
+  (t) => [
+    index("payments_shop_idx").on(t.shopId, t.createdAt),
+    index("payments_order_idx").on(t.orderId, t.createdAt),
+    unique("payments_provider_kaspi_unique").on(t.provider, t.kaspiPaymentId),
+  ],
 );
 
 // ---------------------------------------------------------------------------
