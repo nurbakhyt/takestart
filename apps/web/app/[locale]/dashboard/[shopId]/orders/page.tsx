@@ -7,7 +7,7 @@ import { requireShop } from "@/lib/dashboard";
 import type { ReceiptLine } from "@/lib/whatsapp";
 import { updateOrderStatus } from "../../actions";
 
-const STATUSES = ["new", "accepted", "done", "cancelled"] as const;
+const STATUSES = ["new", "paid", "accepted", "done", "cancelled"] as const;
 
 export default async function OrdersPage({
   params,
@@ -36,7 +36,12 @@ export default async function OrdersPage({
   return (
     <div>
       {list.map((o) => {
-        const lines = JSON.parse(o.itemsJson) as ReceiptLine[];
+        let lines: ReceiptLine[];
+        try {
+          lines = JSON.parse(o.itemsJson) as ReceiptLine[];
+        } catch {
+          lines = [];
+        }
         const date = new Date(o.createdAt).toLocaleString(
           locale === "kk" ? "kk-KZ" : locale === "en" ? "en-GB" : "ru-RU",
           { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" },

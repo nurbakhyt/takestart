@@ -32,6 +32,10 @@ _Avoid_: Basket
 Снапшот корзины, сохранённый в БД со статусом `new` в момент нажатия «Заказать в WhatsApp», даже если отправка в WA не завершена.
 _Avoid_: Purchase, Transaction, Заявка
 
+**Payment**:
+Попытка приёма денег за Order через Kaspi. Один Order → N Payment (каждая попытка — новая строка). Статусы: `pending | success | failed | expired | lost`; терминальные иммутабельны. Статус Order при успехе — `paid` (между `new` и `accepted`).
+_Avoid_: Transaction, Purchase, Транзакция
+
 **WhatsApp Handoff**:
 Редирект покупателя на `wa.me/<номер магазина>?text=<чек заказа>` с дублирующими кнопками «открыть ещё раз / скопировать».
 _Avoid_: Отправка заказа, Checkout complete

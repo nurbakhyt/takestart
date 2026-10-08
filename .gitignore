@@ -19,3 +19,4 @@ apps/web/.dev.vars
 # misc
 .DS_Store
 *.log
+.vitest/

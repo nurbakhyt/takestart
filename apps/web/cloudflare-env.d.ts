@@ -12,6 +12,13 @@ declare global {
     AUTH_GOOGLE_SECRET?: string;
     AUTH_RESEND_KEY?: string;
     AUTH_RESEND_FROM?: string;
+    /** HMAC-секрет вебхуков kaspi-pos-automation (webhooks.json инстанса). */
+    KASPI_WEBHOOK_SECRET?: string;
+    /** Сессия кассира пилота (ручной онбординг, см. ADR-0005). */
+    KASPI_PAY_BASE_URL?: string;
+    KASPI_TOKEN_SN?: string;
+    KASPI_VTOKEN_SECRET?: string;
+    KASPI_PROFILE_ID?: string;
   }
 }
 
