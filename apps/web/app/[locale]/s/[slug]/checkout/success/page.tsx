@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { CartProvider } from "@/components/storefront/cart-context";
+import { PayQrSection } from "@/components/storefront/pay-qr-section";
 import { SuccessActions } from "@/components/storefront/success-actions";
 import { getDb } from "@/db";
 import { orders } from "@/db/schema";
@@ -38,7 +39,12 @@ export default async function SuccessPage({
   const order = rows[0];
   if (!order || order.shopId !== shop.id) notFound();
 
-  const lines = JSON.parse(order.itemsJson) as ReceiptLine[];
+  let lines: ReceiptLine[];
+  try {
+    lines = JSON.parse(order.itemsJson) as ReceiptLine[];
+  } catch {
+    notFound();
+  }
   const deliveryFee = Math.max(0, order.totalTiyin - lineSubtotal(lines));
   const text = buildOrderText({
     locale,
@@ -79,6 +85,9 @@ export default async function SuccessPage({
             <p className="mx-auto max-w-md text-[14px] text-ink-soft">
               {t("note")}
             </p>
+            <div className="mx-auto">
+              <PayQrSection orderId={order.id} />
+            </div>
             <div className="text-left">
               <SuccessActions
                 slug={shop.slug}

@@ -1,8 +1,11 @@
+import { and, eq } from "drizzle-orm";
 import {
   amountsMatch,
   mapKaspiStatus,
   type PaymentTerminal,
 } from "./kaspi";
+import { orders, payments } from "@/db/schema";
+import type { Db } from "@/db";
 
 export type PaymentStatus = PaymentTerminal | "pending";
 
@@ -111,4 +114,55 @@ export async function applyWebhookEvent(
   }
 
   return { action: "applied", paymentStatus: mapped };
+}
+
+/** Drizzle-реализация шва для роутов (server-only). */
+export function drizzlePaymentRepo(db: Db): PaymentRepo {
+  return {
+    async findByProviderId(provider, kaspiPaymentId) {
+      const rows = await db
+        .select()
+        .from(payments)
+        .where(
+          and(
+            eq(payments.provider, provider),
+            eq(payments.kaspiPaymentId, kaspiPaymentId),
+          ),
+        )
+        .limit(1);
+      const r = rows[0];
+      return r
+        ? {
+            id: r.id,
+            orderId: r.orderId,
+            provider: r.provider,
+            kaspiPaymentId: r.kaspiPaymentId,
+            amountTiyin: r.amountTiyin,
+            kaspiAmountKzt: r.kaspiAmountKzt,
+            status: parsePaymentStatus(r.status),
+            updatedAt: r.updatedAt,
+          }
+        : null;
+    },
+    async markTerminal(id, status, now) {
+      await db
+        .update(payments)
+        .set({ status, updatedAt: now })
+        .where(eq(payments.id, id));
+    },
+    async getOrderStatus(orderId) {
+      const rows = await db
+        .select({ status: orders.status })
+        .from(orders)
+        .where(eq(orders.id, orderId))
+        .limit(1);
+      return rows[0]?.status ?? null;
+    },
+    async markOrderPaid(orderId) {
+      await db
+        .update(orders)
+        .set({ status: "paid" })
+        .where(eq(orders.id, orderId));
+    },
+  };
 }

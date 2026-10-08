@@ -108,7 +108,15 @@
     "openWhatsapp": "Open WhatsApp",
     "copy": "Copy order",
     "copied": "Copied ✓",
-    "backToMenu": "Back to menu"
+    "backToMenu": "Back to menu",
+    "payWithQr": "Pay with Kaspi QR",
+    "payCreating": "Creating QR…",
+    "payUnavailable": "Online payment is unavailable right now — the seller already has your order, please confirm in WhatsApp",
+    "payWaiting": "Waiting for Kaspi payment…",
+    "paySuccess": "Payment received ✓",
+    "payFailed": "Payment failed — try again or message the seller",
+    "payExpired": "QR expired — create a new one",
+    "payError": "Something went wrong — try later"
   },
   "auth": {
     "subtitle": "Seller sign-in",
@@ -177,7 +185,8 @@
       "new": "New",
       "accepted": "Accepted",
       "done": "Done",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "paid": "Paid"
     },
     "errors": {
       "name_required": "Enter a name",

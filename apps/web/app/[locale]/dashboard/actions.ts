@@ -10,7 +10,7 @@ import { requireShop, requireUserId } from "@/lib/dashboard";
 import { normalizeKzPhone } from "@/lib/whatsapp";
 
 const SLUG_RE = /^[a-z0-9-]{3,48}$/;
-const STATUSES = ["new", "accepted", "done", "cancelled"] as const;
+const STATUSES = ["new", "paid", "accepted", "done", "cancelled"] as const;
 
 function localeOf(fd: FormData): string {
   const l = String(fd.get("locale") ?? "ru");
