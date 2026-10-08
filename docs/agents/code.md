@@ -63,11 +63,13 @@
   заказы: продавец закрывает их статусом `cancelled`.
 - Номер магазина — E.164 без плюса (`77011234567`). Текст чека обрезан лимитом
   `WA_TEXT_LIMIT` в `apps/web/lib/whatsapp.ts`.
-- Статусы заказа: `new | accepted | done | cancelled`.
+- Статусы заказа: `new | paid | accepted | done | cancelled` (`paid` — между
+  `new` и `accepted`, ставит приёмник Kaspi-вебхуков, см. ADR-0005).
 
 ## Тесты
 
-- Vitest живёт только в `apps/ai`: `apps/ai/test/*.test.ts`, запуск
-  `pnpm --filter takestart-ai test`.
-- В `apps/web` тестов нет, корневого `test`-скрипта тоже нет. Прежде чем
-  пообещать тест под веб-фичу, договорись, где он будет жить.
+- Vitest живёт в `apps/ai` (`apps/ai/test/*.test.ts`, запуск
+  `pnpm --filter takestart-ai test`) и в `apps/web` (`apps/web/test/*.test.ts`,
+  запуск `pnpm --filter web test`).
+- Правила веб-фич: прежде чем пообещать тест под веб-фичу, договорись, где он
+  будет жить. Корневого `test`-скрипта нет — запуск по фильтрам.

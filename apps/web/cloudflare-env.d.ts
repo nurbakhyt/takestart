@@ -12,6 +12,8 @@ declare global {
     AUTH_GOOGLE_SECRET?: string;
     AUTH_RESEND_KEY?: string;
     AUTH_RESEND_FROM?: string;
+    /** HMAC-секрет вебхуков kaspi-pos-automation (webhooks.json инстанса). */
+    KASPI_WEBHOOK_SECRET?: string;
   }
 }
 
