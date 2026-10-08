@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   createKaspiPayClient,
   pickQrImage,
+  sessionFromEnv,
   toKzt,
 } from "../lib/kaspiPay";
 
@@ -31,6 +32,31 @@ describe("pickQrImage", () => {
     expect(pickQrImage({ QrToken: "https://pay.kaspi.kz/pay/aaa" })).toBe(
       "https://pay.kaspi.kz/pay/aaa",
     );
+  });
+});
+
+describe("sessionFromEnv", () => {
+  it("полная сессия — соединение с baseUrl из env", () => {
+    expect(
+      sessionFromEnv({
+        KASPI_PAY_BASE_URL: "https://pay.takestart.cc/s/pilot",
+        KASPI_TOKEN_SN: "SN",
+        KASPI_VTOKEN_SECRET: "VS",
+        KASPI_PROFILE_ID: "7",
+      }),
+    ).toEqual({
+      baseUrl: "https://pay.takestart.cc/s/pilot",
+      session: { tokenSN: "SN", vtokenSecret: "VS", profileId: "7" },
+    });
+  });
+
+  it("без baseUrl — дефолт пилота; без токенов — null", () => {
+    expect(
+      sessionFromEnv({ KASPI_TOKEN_SN: "SN", KASPI_VTOKEN_SECRET: "VS" })
+        ?.baseUrl,
+    ).toBe("https://pay.takestart.cc/s/pilot");
+    expect(sessionFromEnv({})).toBeNull();
+    expect(sessionFromEnv({ KASPI_TOKEN_SN: "SN" })).toBeNull();
   });
 });
 

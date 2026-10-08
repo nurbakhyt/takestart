@@ -3,8 +3,12 @@ import { z } from "zod";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { getDb } from "@/db";
 import { mapKaspiStatus } from "@/lib/kaspi";
-import { applyWebhookEvent, drizzlePaymentRepo } from "@/lib/payments";
-import { createKaspiPayClient } from "@/lib/kaspiPay";
+import {
+  applyWebhookEvent,
+  bad,
+  drizzlePaymentRepo,
+} from "@/lib/payments";
+import { createKaspiPayClient, sessionFromEnv } from "@/lib/kaspiPay";
 
 const querySchema = z.object({
   provider: z.enum(["kaspi-qr", "kaspi-invoice"]),
@@ -21,14 +25,14 @@ export async function GET(req: Request) {
   try {
     url = new URL(req.url);
   } catch {
-    return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
+    return bad("invalid_payload");
   }
   const parsed = querySchema.safeParse({
     provider: url.searchParams.get("provider"),
     kaspiPaymentId: url.searchParams.get("kaspiPaymentId"),
   });
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
+    return bad("invalid_payload");
   }
   const { provider, kaspiPaymentId } = parsed.data;
 
@@ -38,25 +42,13 @@ export async function GET(req: Request) {
 
   const row = await repo.findByProviderId(provider, kaspiPaymentId);
   if (!row) {
-    return NextResponse.json({ error: "payment_not_found" }, { status: 404 });
+    return bad("payment_not_found", 404);
   }
 
-  if (
-    row.status === "pending" &&
-    provider === "kaspi-qr" &&
-    env.KASPI_TOKEN_SN &&
-    env.KASPI_VTOKEN_SECRET
-  ) {
+  const conn = sessionFromEnv(env);
+  if (row.status === "pending" && provider === "kaspi-qr" && conn) {
     try {
-      const client = createKaspiPayClient({
-        baseUrl: env.KASPI_PAY_BASE_URL || "https://pay.takestart.cc/s/pilot",
-        session: {
-          tokenSN: env.KASPI_TOKEN_SN,
-          vtokenSecret: env.KASPI_VTOKEN_SECRET,
-          profileId: env.KASPI_PROFILE_ID,
-        },
-        fetchFn: fetch,
-      });
+      const client = createKaspiPayClient({ ...conn, fetchFn: fetch });
       const { status: kaspiStatus } = await client.qrStatus(kaspiPaymentId);
       const mapped = mapKaspiStatus("qr", kaspiStatus);
       if (mapped) {

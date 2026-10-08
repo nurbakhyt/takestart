@@ -6,6 +6,32 @@ export interface KaspiSession {
   profileId?: string;
 }
 
+/** Подмножество env, нужное для сессии (структурно совпадает с CloudflareEnv). */
+export interface KaspiEnv {
+  KASPI_PAY_BASE_URL?: string;
+  KASPI_TOKEN_SN?: string;
+  KASPI_VTOKEN_SECRET?: string;
+  KASPI_PROFILE_ID?: string;
+}
+
+export interface KaspiConnection {
+  baseUrl: string;
+  session: KaspiSession;
+}
+
+/** Сессия кассира из env; null — сессии нет, отдаём 503 payments_unavailable. */
+export function sessionFromEnv(env: KaspiEnv): KaspiConnection | null {
+  if (!env.KASPI_TOKEN_SN || !env.KASPI_VTOKEN_SECRET) return null;
+  return {
+    baseUrl: env.KASPI_PAY_BASE_URL || "https://pay.takestart.cc/s/pilot",
+    session: {
+      tokenSN: env.KASPI_TOKEN_SN,
+      vtokenSecret: env.KASPI_VTOKEN_SECRET,
+      profileId: env.KASPI_PROFILE_ID,
+    },
+  };
+}
+
 export interface QrData {
   QrToken: string;
   QrOriginalToken?: string;

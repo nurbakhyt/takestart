@@ -1,4 +1,5 @@
 import { and, eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
 import {
   amountsMatch,
   mapKaspiStatus,
@@ -114,6 +115,11 @@ export async function applyWebhookEvent(
   }
 
   return { action: "applied", paymentStatus: mapped };
+}
+
+/** Общий ответ ошибок payments-роутов: { error } + статус. */
+export function bad(error: string, status = 400) {
+  return NextResponse.json({ error }, { status });
 }
 
 /** Drizzle-реализация шва для роутов (server-only). */
